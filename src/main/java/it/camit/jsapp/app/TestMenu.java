@@ -22,6 +22,7 @@ package it.camit.jsapp.app;
 import it.camit.jsapp.core.util.SappUtils;
 import it.camit.jsapp.core.util.command.Sapp7CCommand;
 import it.camit.jsapp.core.util.command.Sapp7DCommand;
+import it.camit.jsapp.core.util.command.Sapp82Command;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 import it.camit.jsapp.core.util.command.base.SappConnection;
 import it.camit.jsapp.core.util.command.base.SappException;
@@ -114,6 +115,9 @@ public class TestMenu {
 			} else if ("7D".equalsIgnoreCase(choice)) {
 				execute7D();
 				requireEnter();
+			} else if ("82".equalsIgnoreCase(choice)) {
+				execute82();
+				requireEnter();
 			} else if ("99".equals(choice)) {
 				disconnectFromDevice();
 				return;
@@ -199,6 +203,24 @@ public class TestMenu {
 
 		try {
 			sappCommand = new Sapp7DCommand(nvvar, value);
+			sappCommand.run(sappConnection);
+			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
+		} catch (SappException e) {
+			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
+		}
+	}
+
+	private void execute82() {
+
+		if (sappConnection == null || !sappConnection.isConnected()) {
+			alertUser("Device disconnected, connect first");
+			return;
+		}
+
+		SappCommand sappCommand;
+
+		try {
+			sappCommand = new Sapp82Command();
 			sappCommand.run(sappConnection);
 			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {

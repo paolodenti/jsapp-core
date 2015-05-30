@@ -32,6 +32,11 @@ import java.util.Scanner;
 
 // TODO: comandi da implementare, da 0x70 a 0x82
 
+/**
+ * <p>Program for Sapp commands testing.</p>
+ *
+ * @author Paolo Denti
+ */
 public class TestMenu {
 
 	private String hostName = null;

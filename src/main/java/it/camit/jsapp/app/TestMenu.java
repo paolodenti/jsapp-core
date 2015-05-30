@@ -21,6 +21,7 @@ package it.camit.jsapp.app;
 
 import it.camit.jsapp.core.util.SappUtils;
 import it.camit.jsapp.core.util.command.Sapp7CCommand;
+import it.camit.jsapp.core.util.command.Sapp7DCommand;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 import it.camit.jsapp.core.util.command.base.SappConnection;
 import it.camit.jsapp.core.util.command.base.SappException;
@@ -114,6 +115,9 @@ public class TestMenu {
 			} else if ("7C".equalsIgnoreCase(choice)) {
 				execute7C();
 				requireEnter();
+			} else if ("7D".equalsIgnoreCase(choice)) {
+				execute7D();
+				requireEnter();
 			} else if ("99".equals(choice)) {
 				disconnectFromDevice();
 				return;
@@ -167,6 +171,37 @@ public class TestMenu {
 
 		try {
 			sappCommand = new Sapp7CCommand(nvvar);
+			sappCommand.run(sappConnection);
+			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
+		} catch (SappException e) {
+			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
+		}
+	}
+
+	private void execute7D() {
+
+		if (sappConnection == null || !sappConnection.isConnected()) {
+			alertUser("Device disconnected, connect first");
+			return;
+		}
+
+		int nvvar;
+		System.out.print("Enter address (1-2500): ");
+		try {
+			nvvar = Integer.parseInt(input.nextLine());
+			if (nvvar < 1 || nvvar > 2500) {
+				alertUser("bad address");
+				return;
+			}
+		} catch (NumberFormatException e) {
+			alertUser("bad address");
+			return;
+		}
+
+		SappCommand sappCommand;
+
+		try {
+			sappCommand = new Sapp7DCommand(nvvar, 2000);
 			sappCommand.run(sappConnection);
 			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {

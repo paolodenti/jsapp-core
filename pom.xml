@@ -69,7 +69,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>it.camit.jsapp.app.App</mainClass>
+							<mainClass>it.camit.jsapp.app.TestMenu</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

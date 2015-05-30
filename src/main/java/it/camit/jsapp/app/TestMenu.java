@@ -234,7 +234,6 @@ public class TestMenu {
 		}
 	}
 
-	// TODO completare con il controllo di num valori = 32 e fare chiamate aggiuntive
 	private void execute80() {
 
 		SappCommand sappCommand;

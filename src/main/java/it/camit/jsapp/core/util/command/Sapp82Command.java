@@ -28,6 +28,7 @@ import it.camit.jsapp.core.util.command.base.SappCommand;
  *
  * @author Paolo Denti
  */
+// TODO completare con il controllo di num valori = 32 e fare chiamate aggiuntive
 public class Sapp82Command extends SappCommand implements ISappCommandWordMap {
 
 	/**

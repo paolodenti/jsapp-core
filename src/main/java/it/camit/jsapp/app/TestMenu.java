@@ -19,7 +19,11 @@
 
 package it.camit.jsapp.app;
 
+import it.camit.jsapp.core.util.SappUtils;
+import it.camit.jsapp.core.util.command.Sapp7CCommand;
+import it.camit.jsapp.core.util.command.base.SappCommand;
 import it.camit.jsapp.core.util.command.base.SappConnection;
+import it.camit.jsapp.core.util.command.base.SappException;
 
 import java.util.Scanner;
 
@@ -79,7 +83,7 @@ public class TestMenu {
 
 		while (true) {
 			System.out.println("===================================");
-			System.out.println(String.format("device address: %s:%d", hostName, portNumber));
+			System.out.println(String.format("Device address: %s:%d", hostName, portNumber));
 			System.out.println((sappConnection != null && sappConnection.isConnected()) ? "Connected" : "Not connected");
 
 			System.out.println("===================================");
@@ -106,6 +110,9 @@ public class TestMenu {
 				connectToDevice();
 			} else if ("3".equals(choice)) {
 				disconnectFromDevice();
+			} else if ("7C".equalsIgnoreCase(choice)) {
+				execute7C();
+				requireEnter();
 			} else if ("99".equals(choice)) {
 				disconnectFromDevice();
 				return;
@@ -137,12 +144,37 @@ public class TestMenu {
 
 	private void execute7C() {
 
+		if (sappConnection == null || !sappConnection.isConnected()) {
+			alertUser("Device disconnected, connect first");
+			return;
+		}
+
+		SappCommand sappCommand;
+
+		try {
+			sappCommand = new Sapp7CCommand(3);
+			monitorExecution(sappCommand, sappConnection);
+			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + SappUtils.prettyPrint(sappCommand) : "failed");
+		} catch (SappException e) {
+			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
+		}
 	}
 
 	private void alertUser(String message) {
 
 		System.out.println(message);
+		requireEnter();
+	}
+
+	private void requireEnter() {
+
 		System.out.println("Press enter to continue");
 		input.nextLine();
+	}
+
+	private void monitorExecution(SappCommand sappCommand, SappConnection sappConnection) throws SappException {
+		long start = System.currentTimeMillis();
+		sappCommand.run(sappConnection);
+		System.out.println(String.format("msec elapsed for command execution: %d", (System.currentTimeMillis() - start)));
 	}
 }

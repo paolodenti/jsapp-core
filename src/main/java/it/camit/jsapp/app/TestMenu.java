@@ -43,7 +43,6 @@ public class TestMenu {
 
 	private String hostName = null;
 	private int portNumber = 0;
-	private SappConnection sappConnection = null;
 	private Scanner input = null;
 
 	public static void main(String[] args) {
@@ -62,32 +61,10 @@ public class TestMenu {
 		}
 	}
 
-	private void getDeviceAddress() {
-
-		while (true) {
-			System.out.print("Enter device address: ");
-			hostName = input.nextLine();
-			if (hostName.length() > 0) {
-				break;
-			}
-		}
-
-		while (true) {
-			try {
-				System.out.print("Enter device port (1-65535): ");
-				portNumber = readInt(1, 65535);
-				break;
-			} catch (NumberFormatException e) {
-				alertUser("bad port");
-			}
-		}
-	}
-
 	private void presentMenu() {
 
 		if (hostName == null && portNumber == 0) {
 			getDeviceAddress();
-			connectToDevice();
 		}
 
 		while (true) {
@@ -95,12 +72,10 @@ public class TestMenu {
 			System.out.println("                    JSapp test menu");
 			System.out.println("=======================================================");
 
-			System.out.println(String.format("Device address: %s:%d (%s)", hostName, portNumber, (sappConnection != null && sappConnection.isConnected()) ? "Connected" : "Not connected"));
+			System.out.println(String.format("Device address: %s:%d", hostName, portNumber));
 			System.out.println();
 
 			System.out.println(" 1) Change device address & port");
-			System.out.println(" 2) Connect to device");
-			System.out.println(" 3) Disconnect from device");
 			System.out.println();
 			System.out.println("7C) execute 0x7C command (Get Virtual Status WORD)");
 			System.out.println("7D) execute 0x7D command (Set Virtual Status WORD)");
@@ -116,13 +91,7 @@ public class TestMenu {
 
 			String choice = input.nextLine();
 			if ("1".equals(choice)) {
-				disconnectFromDevice();
 				getDeviceAddress();
-				connectToDevice();
-			} else if ("2".equals(choice)) {
-				connectToDevice();
-			} else if ("3".equals(choice)) {
-				disconnectFromDevice();
 			} else if ("7C".equalsIgnoreCase(choice)) {
 				execute7C();
 				requireEnter();
@@ -142,40 +111,46 @@ public class TestMenu {
 				execute82();
 				requireEnter();
 			} else if ("99".equals(choice)) {
-				disconnectFromDevice();
-				return;
+				break;
 			}
 		}
 	}
 
-	private void connectToDevice() {
+	private void getDeviceAddress() {
 
-		if (sappConnection != null && sappConnection.isConnected()) {
-			sappConnection.closeConnection();
-		}
+		while(true) {
+			while (true) {
+				System.out.print("Enter device address: ");
+				hostName = input.nextLine();
+				if (hostName.length() > 0) {
+					break;
+				}
+			}
 
-		sappConnection = new SappConnection(hostName, portNumber);
-		try {
-			sappConnection.openConnection();
-		} catch (Exception e) {
-			alertUser("Cannot open connection to device");
-			return;
-		}
-	}
+			while (true) {
+				try {
+					System.out.print("Enter device port (1-65535): ");
+					portNumber = readInt(1, 65535);
+					break;
+				} catch (NumberFormatException e) {
+					alertUser("bad port");
+				}
+			}
 
-	private void disconnectFromDevice() {
-
-		if (sappConnection != null && sappConnection.isConnected()) {
-			sappConnection.closeConnection();
+			SappConnection sappConnection = new SappConnection(hostName, portNumber);
+			try {
+				sappConnection.openConnection();
+				sappConnection.closeConnection();
+				break;
+			} catch (Exception e) {
+				alertUser("Cannot open connection to device");
+				hostName = null;
+				portNumber = 0;
+			}
 		}
 	}
 
 	private void execute7C() {
-
-		if (sappConnection == null || !sappConnection.isConnected()) {
-			alertUser("Device disconnected, connect first");
-			return;
-		}
 
 		int nvvar;
 		try {
@@ -190,7 +165,7 @@ public class TestMenu {
 
 		try {
 			sappCommand = new Sapp7CCommand(nvvar);
-			sappCommand.run(sappConnection);
+			sappCommand.run(hostName, portNumber);
 			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
@@ -198,11 +173,6 @@ public class TestMenu {
 	}
 
 	private void execute7D() {
-
-		if (sappConnection == null || !sappConnection.isConnected()) {
-			alertUser("Device disconnected, connect first");
-			return;
-		}
 
 		int nvvar;
 		try {
@@ -226,7 +196,7 @@ public class TestMenu {
 
 		try {
 			sappCommand = new Sapp7DCommand(nvvar, value);
-			sappCommand.run(sappConnection);
+			sappCommand.run(hostName, portNumber);
 			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
@@ -234,11 +204,6 @@ public class TestMenu {
 	}
 
 	private void execute7E() {
-
-		if (sappConnection == null || !sappConnection.isConnected()) {
-			alertUser("Device disconnected, connect first");
-			return;
-		}
 
 		int nvvar;
 		try {
@@ -262,7 +227,7 @@ public class TestMenu {
 
 		try {
 			sappCommand = new Sapp7ECommand(nvvar, len);
-			sappCommand.run(sappConnection);
+			sappCommand.run(hostName, portNumber);
 			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
@@ -271,16 +236,11 @@ public class TestMenu {
 
 	private void execute80() {
 
-		if (sappConnection == null || !sappConnection.isConnected()) {
-			alertUser("Device disconnected, connect first");
-			return;
-		}
-
 		SappCommand sappCommand;
 
 		try {
 			sappCommand = new Sapp80Command();
-			sappCommand.run(sappConnection);
+			sappCommand.run(hostName, portNumber);
 			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
@@ -289,16 +249,11 @@ public class TestMenu {
 
 	private void execute81() {
 
-		if (sappConnection == null || !sappConnection.isConnected()) {
-			alertUser("Device disconnected, connect first");
-			return;
-		}
-
 		SappCommand sappCommand;
 
 		try {
 			sappCommand = new Sapp81Command();
-			sappCommand.run(sappConnection);
+			sappCommand.run(hostName, portNumber);
 			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
@@ -307,16 +262,11 @@ public class TestMenu {
 
 	private void execute82() {
 
-		if (sappConnection == null || !sappConnection.isConnected()) {
-			alertUser("Device disconnected, connect first");
-			return;
-		}
-
 		SappCommand sappCommand;
 
 		try {
 			sappCommand = new Sapp82Command();
-			sappCommand.run(sappConnection);
+			sappCommand.run(hostName, portNumber);
 			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));

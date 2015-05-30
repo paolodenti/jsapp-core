@@ -28,6 +28,7 @@ public class TestMenu {
 	private String hostName = null;
 	private int portNumber = 0;
 	private SappConnection sappConnection = null;
+	private Scanner input = null;
 
 	public static void main(String[] args) {
 		new TestMenu().run(args);
@@ -35,11 +36,9 @@ public class TestMenu {
 
 	public void run(String[] args) {
 
-		Scanner input = new Scanner(System.in);
+		input = new Scanner(System.in);
 		try {
-			getDeviceAddress(input);
-
-			presentMenu(input);
+			presentMenu();
 		} finally {
 			if (input != null) {
 				input.close();
@@ -47,52 +46,41 @@ public class TestMenu {
 		}
 	}
 
-	private void getDeviceAddress(Scanner input) {
+	private void getDeviceAddress() {
 
 		while (true) {
-			while (true) {
-				System.out.print("Enter device address: ");
-				hostName = input.nextLine();
-				if (hostName.length() > 0) {
-					break;
-				}
-			}
-
-			while (true) {
-
-				System.out.print("Enter device port: ");
-				String port = input.nextLine();
-				try {
-					portNumber = Integer.parseInt(port);
-					break;
-				} catch (NumberFormatException e) {
-					System.out.println("Bad address");
-				}
-			}
-
-			if (sappConnection != null) {
-				sappConnection.closeConnection();
-			}
-
-			sappConnection = new SappConnection(hostName, portNumber);
-			try {
-				sappConnection.openConnection();
+			System.out.print("Enter device address: ");
+			hostName = input.nextLine();
+			if (hostName.length() > 0) {
 				break;
-			} catch (Exception e) {
-				System.out.println("Cannot open connection to device");
+			}
+		}
+
+		while (true) {
+
+			System.out.print("Enter device port (1-65535): ");
+			String port = input.nextLine();
+			try {
+				portNumber = Integer.parseInt(port);
+				if (portNumber >= 1 && portNumber <= 65535) {
+					break;
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Bad address");
 			}
 		}
 	}
 
-	private void presentMenu(Scanner input) {
+	private void presentMenu() {
+
+		if (hostName == null && portNumber == 0) {
+			getDeviceAddress();
+		}
 
 		while (true) {
 			System.out.println("===================================");
-			if (sappConnection != null && sappConnection.isConnected()) {
-				System.out.println(String.format("Connected to %s:%d", hostName, portNumber));
-			} else {
-				System.out.println("Not connected");
-			}
+			System.out.println(String.format("device address: %s:%d", hostName, portNumber));
+			System.out.println((sappConnection != null && sappConnection.isConnected()) ? "Connected" : "Not connected");
 
 			System.out.println("===================================");
 			System.out.println("          JSapp test menu");
@@ -111,19 +99,50 @@ public class TestMenu {
 			System.out.println("===================================");
 
 			String choice = input.nextLine();
-			if ("99".equals(choice)) {
-				if (sappConnection != null) {
-					sappConnection.closeConnection();
-				}
-
+			if ("1".equals(choice)) {
+				disconnectFromDevice();
+				getDeviceAddress();
+			} else if ("2".equals(choice)) {
+				connectToDevice();
+			} else if ("3".equals(choice)) {
+				disconnectFromDevice();
+			} else if ("99".equals(choice)) {
+				disconnectFromDevice();
 				return;
-			} else if ("1".equals(choice)) {
-				getDeviceAddress(input);
 			}
+		}
+	}
+
+	private void connectToDevice() {
+
+		if (sappConnection != null && sappConnection.isConnected()) {
+			sappConnection.closeConnection();
+		}
+
+		sappConnection = new SappConnection(hostName, portNumber);
+		try {
+			sappConnection.openConnection();
+		} catch (Exception e) {
+			alertUser("Cannot open connection to device");
+			return;
+		}
+	}
+
+	private void disconnectFromDevice() {
+
+		if (sappConnection != null && sappConnection.isConnected()) {
+			sappConnection.closeConnection();
 		}
 	}
 
 	private void execute7C() {
 
+	}
+
+	private void alertUser(String message) {
+
+		System.out.println(message);
+		System.out.println("Press enter to continue");
+		input.nextLine();
 	}
 }

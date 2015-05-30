@@ -79,16 +79,16 @@ public class TestMenu {
 
 		if (hostName == null && portNumber == 0) {
 			getDeviceAddress();
+			connectToDevice();
 		}
 
 		while (true) {
-			System.out.println("===================================");
-			System.out.println(String.format("Device address: %s:%d", hostName, portNumber));
-			System.out.println((sappConnection != null && sappConnection.isConnected()) ? "Connected" : "Not connected");
+			System.out.println("=======================================================");
+			System.out.println("                    JSapp test menu");
+			System.out.println("=======================================================");
 
-			System.out.println("===================================");
-			System.out.println("          JSapp test menu");
-			System.out.println("===================================");
+			System.out.println(String.format("Device address: %s:%d (%s)", hostName, portNumber, (sappConnection != null && sappConnection.isConnected()) ? "Connected" : "Not connected"));
+			System.out.println();
 
 			System.out.println(" 1) Change device address & port");
 			System.out.println(" 2) Connect to device");
@@ -100,12 +100,13 @@ public class TestMenu {
 			System.out.println("82) execute 0x82 command (Get Last Virtual WORD)");
 			System.out.println();
 			System.out.println("99) Exit");
-			System.out.println("===================================");
+			System.out.println("=======================================================");
 
 			String choice = input.nextLine();
 			if ("1".equals(choice)) {
 				disconnectFromDevice();
 				getDeviceAddress();
+				connectToDevice();
 			} else if ("2".equals(choice)) {
 				connectToDevice();
 			} else if ("3".equals(choice)) {

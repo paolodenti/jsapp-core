@@ -1,0 +1,27 @@
+                                  JSapp
+                               Version 1.0
+                              Release Notes
+
+
+INTRODUCTION:
+
+This document contains the release notes for the 1.0 version of
+JSapp library. JSapp is a set of utility functions to access Sinthesi devices home automation hardware by native Sapp Over Ethernet PICnet protocol.
+JSapp 1.0 at least requires Java 7.0.
+
+COMPATIBILITY
+=============
+
+The library is based on version Sapp PICNET specification version 3.3
+
+NEW FEATURES
+==============
+
+
+FIXED BUGS
+============
+
+
+CHANGES
+=========
+

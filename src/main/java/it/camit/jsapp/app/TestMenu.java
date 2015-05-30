@@ -137,8 +137,8 @@ public class TestMenu {
 				}
 			}
 
-			SappConnection sappConnection = new SappConnection(hostName, portNumber);
 			try {
+				SappConnection sappConnection = new SappConnection(hostName, portNumber);
 				sappConnection.openConnection();
 				sappConnection.closeConnection();
 				break;

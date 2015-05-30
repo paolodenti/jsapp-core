@@ -19,6 +19,7 @@
 
 package it.camit.jsapp.app;
 
+import it.camit.jsapp.core.util.SappUtils;
 import it.camit.jsapp.core.util.command.Sapp82Command;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 import it.camit.jsapp.core.util.command.base.SappException;
@@ -44,7 +45,7 @@ public class App2 {
 		try {
 			SappCommand sappCommand = new Sapp82Command();
 			monitorExecution(sappCommand, hostName, portNumber);
-			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - " + sappCommand.getResponse().getDataAsWordMap(): "failed");
+			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + SappUtils.prettyPrint(sappCommand) : "failed");
 		} catch (SappException e) {
 			e.printStackTrace();
 		}

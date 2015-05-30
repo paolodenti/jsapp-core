@@ -56,27 +56,27 @@ public class AppKeepAlive {
 
 			sappCommand = new Sapp7CCommand(3);
 			monitorExecution(sappCommand, sappConnection);
-			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + sappCommand.getResponse().getDataAsWord() : "failed");
+			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + SappUtils.prettyPrint(sappCommand) : "failed");
 
 			sappCommand = new Sapp7CCommand(4);
 			monitorExecution(sappCommand, sappConnection);
-			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + sappCommand.getResponse().getDataAsWord() : "failed");
+			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + SappUtils.prettyPrint(sappCommand) : "failed");
 
 			sappCommand = new Sapp7DCommand(11, 2512);
 			monitorExecution(sappCommand, sappConnection);
-			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() : "failed");
+			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + SappUtils.prettyPrint(sappCommand) : "failed");
 
 			sappCommand = new Sapp7DCommand(12, 2513);
 			monitorExecution(sappCommand, sappConnection);
-			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() : "failed");
+			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + SappUtils.prettyPrint(sappCommand) : "failed");
 
 			sappCommand = new Sapp7CCommand(11);
 			monitorExecution(sappCommand, sappConnection);
-			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + sappCommand.getResponse().getDataAsWord() : "failed");
+			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + SappUtils.prettyPrint(sappCommand) : "failed");
 
 			sappCommand = new Sapp7ECommand(1, (byte) 25);
 			monitorExecution(sappCommand, sappConnection);
-			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + SappUtils.prettyPrintWordArray(sappCommand.getResponse().getDataAsWordArray()) : "failed");
+			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + SappUtils.prettyPrint(sappCommand) : "failed");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (SappException e) {

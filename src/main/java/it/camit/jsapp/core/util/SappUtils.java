@@ -19,6 +19,12 @@
 
 package it.camit.jsapp.core.util;
 
+import it.camit.jsapp.core.util.command.base.ISappCommandNoResult;
+import it.camit.jsapp.core.util.command.base.ISappCommandWord;
+import it.camit.jsapp.core.util.command.base.ISappCommandWordArray;
+import it.camit.jsapp.core.util.command.base.ISappCommandWordMap;
+import it.camit.jsapp.core.util.command.base.SappCommand;
+
 /**
  * <p>Utility class for bytes manipulation</p>
  *
@@ -121,9 +127,31 @@ public class SappUtils {
 	}
 
 	/**
+	 * @return a pretty formatted string of SappResponse depending on command type
+	 */
+	public static String prettyPrint(SappCommand sappCommand) {
+
+		if (sappCommand == null) {
+			return "";
+		}
+
+		if (sappCommand instanceof ISappCommandNoResult) {
+			return "";
+		} else if (sappCommand instanceof ISappCommandWord) {
+			return sappCommand.getResponse() == null ? "" : String.format("%d", sappCommand.getResponse().getDataAsWord());
+		} else if (sappCommand instanceof ISappCommandWordArray) {
+			return sappCommand.getResponse() == null ? "" : prettyPrintWordArray(sappCommand.getResponse().getDataAsWordArray());
+		} else if (sappCommand instanceof ISappCommandWordMap) {
+			return sappCommand.getResponse() == null ? "" : sappCommand.getResponse().getDataAsWordMap().toString();
+		} else {
+			return sappCommand.getResponse() == null ? "" : sappCommand.getResponse().toString();
+		}
+	}
+
+	/**
 	 * @return a pretty formatted byte array
 	 */
-	public static String prettyPrintWordArray(int[] data) {
+	private static String prettyPrintWordArray(int[] data) {
 
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("[ ");

@@ -21,6 +21,7 @@ package it.camit.jsapp.core.util.command;
 
 import it.camit.jsapp.core.util.SappByteBuffer;
 import it.camit.jsapp.core.util.SappUtils;
+import it.camit.jsapp.core.util.command.base.ISappCommandNoResult;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
@@ -28,7 +29,7 @@ import it.camit.jsapp.core.util.command.base.SappCommand;
  *
  * @author Paolo Denti
  */
-public class Sapp7DCommand extends SappCommand {
+public class Sapp7DCommand extends SappCommand implements ISappCommandNoResult {
 
 	/**
 	 * <p>0x7D command constructor.</p>

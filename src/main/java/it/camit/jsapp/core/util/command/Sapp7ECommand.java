@@ -21,6 +21,7 @@ package it.camit.jsapp.core.util.command;
 
 import it.camit.jsapp.core.util.SappByteBuffer;
 import it.camit.jsapp.core.util.SappUtils;
+import it.camit.jsapp.core.util.command.base.ISappCommandWordArray;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
@@ -28,7 +29,7 @@ import it.camit.jsapp.core.util.command.base.SappCommand;
  *
  * @author Paolo Denti
  */
-public class Sapp7ECommand extends SappCommand {
+public class Sapp7ECommand extends SappCommand implements ISappCommandWordArray {
 
 	/**
 	 * <p>0x7E command constructor.</p>

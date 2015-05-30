@@ -17,33 +17,13 @@
  * limitations under the License.
  */
 
-package it.camit.jsapp.core.util.command;
-
-import it.camit.jsapp.core.util.SappByteBuffer;
-import it.camit.jsapp.core.util.SappUtils;
-import it.camit.jsapp.core.util.command.base.ISappCommandWord;
-import it.camit.jsapp.core.util.command.base.SappCommand;
+package it.camit.jsapp.core.util.command.base;
 
 /**
- * <p>Sapp Command 0x7C</p>
+ * <p>Interface for commands returning a map of address/word</p>
  *
  * @author Paolo Denti
  */
-public class Sapp7CCommand extends SappCommand implements ISappCommandWord {
+public interface ISappCommandWordMap {
 
-	/**
-	 * <p>0x7C command constructor.</p>
-	 *
-	 * @param nvvar  virtual variable address
-	 */
-	public Sapp7CCommand(int nvvar) {
-
-		super();
-
-		SappByteBuffer buffer = new SappByteBuffer();
-		buffer.addByte((byte) 0x7C);
-		buffer.addBytes(SappUtils.getHexAsciiWord(nvvar));
-
-		this.command = buffer.getArray();
-	}
 }

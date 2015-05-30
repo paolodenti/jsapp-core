@@ -30,6 +30,8 @@ import it.camit.jsapp.core.util.command.base.SappException;
 
 import java.util.Scanner;
 
+// TODO: comandi da implementare, da 0x70 a 0x82
+
 public class TestMenu {
 
 	private String hostName = null;

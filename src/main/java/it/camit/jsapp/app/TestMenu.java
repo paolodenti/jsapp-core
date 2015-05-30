@@ -166,7 +166,7 @@ public class TestMenu {
 		try {
 			sappCommand = new Sapp7CCommand(nvvar);
 			sappCommand.run(hostName, portNumber);
-			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
+			System.out.println(sappCommand.isResponseOk() ? "raw response: " + sappCommand.getResponse().toString() + " - result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
 		}
@@ -197,7 +197,7 @@ public class TestMenu {
 		try {
 			sappCommand = new Sapp7DCommand(nvvar, value);
 			sappCommand.run(hostName, portNumber);
-			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
+			System.out.println(sappCommand.isResponseOk() ? "raw response: " + sappCommand.getResponse().toString() + " - result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
 		}
@@ -228,7 +228,7 @@ public class TestMenu {
 		try {
 			sappCommand = new Sapp7ECommand(nvvar, len);
 			sappCommand.run(hostName, portNumber);
-			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
+			System.out.println(sappCommand.isResponseOk() ? "raw response: " + sappCommand.getResponse().toString() + " - result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
 		}
@@ -242,7 +242,7 @@ public class TestMenu {
 		try {
 			sappCommand = new Sapp80Command();
 			sappCommand.run(hostName, portNumber);
-			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
+			System.out.println(sappCommand.isResponseOk() ? "raw response: " + sappCommand.getResponse().toString() + " - result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
 		}
@@ -255,7 +255,7 @@ public class TestMenu {
 		try {
 			sappCommand = new Sapp81Command();
 			sappCommand.run(hostName, portNumber);
-			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
+			System.out.println(sappCommand.isResponseOk() ? "raw response: " + sappCommand.getResponse().toString() + " - result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
 		}
@@ -268,7 +268,7 @@ public class TestMenu {
 		try {
 			sappCommand = new Sapp82Command();
 			sappCommand.run(hostName, portNumber);
-			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
+			System.out.println(sappCommand.isResponseOk() ? "raw response: " + sappCommand.getResponse().toString() + " - result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
 		}

@@ -150,12 +150,25 @@ public class TestMenu {
 			return;
 		}
 
+		int nvvar;
+		System.out.print("Enter address (1-2500): ");
+		try {
+			nvvar = Integer.parseInt(input.nextLine());
+			if (nvvar < 1 || nvvar > 2500) {
+				alertUser("bad address");
+				return;
+			}
+		} catch (NumberFormatException e) {
+			alertUser("bad address");
+			return;
+		}
+
 		SappCommand sappCommand;
 
 		try {
-			sappCommand = new Sapp7CCommand(3);
-			monitorExecution(sappCommand, sappConnection);
-			System.out.println(sappCommand.isResponseOk() ? sappCommand.getResponse() + " - value: " + SappUtils.prettyPrint(sappCommand) : "failed");
+			sappCommand = new Sapp7CCommand(nvvar);
+			sappCommand.run(sappConnection);
+			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
 			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
 		}
@@ -171,11 +184,5 @@ public class TestMenu {
 
 		System.out.println("Press enter to continue");
 		input.nextLine();
-	}
-
-	private void monitorExecution(SappCommand sappCommand, SappConnection sappConnection) throws SappException {
-		long start = System.currentTimeMillis();
-		sappCommand.run(sappConnection);
-		System.out.println(String.format("msec elapsed for command execution: %d", (System.currentTimeMillis() - start)));
 	}
 }

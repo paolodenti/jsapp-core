@@ -62,16 +62,12 @@ public class TestMenu {
 		}
 
 		while (true) {
-
-			System.out.print("Enter device port (1-65535): ");
-			String port = input.nextLine();
 			try {
-				portNumber = Integer.parseInt(port);
-				if (portNumber >= 1 && portNumber <= 65535) {
-					break;
-				}
+				System.out.print("Enter device port (1-65535): ");
+				portNumber = readInt(1, 65535);
+				break;
 			} catch (NumberFormatException e) {
-				System.out.println("Bad address");
+				alertUser("bad port");
 			}
 		}
 	}
@@ -155,13 +151,9 @@ public class TestMenu {
 		}
 
 		int nvvar;
-		System.out.print("Enter address (1-2500): ");
 		try {
-			nvvar = Integer.parseInt(input.nextLine());
-			if (nvvar < 1 || nvvar > 2500) {
-				alertUser("bad address");
-				return;
-			}
+			System.out.print(String.format("Enter address (%d-%d): ", 1, 2500));
+			nvvar = readInt(1, 2500);
 		} catch (NumberFormatException e) {
 			alertUser("bad address");
 			return;
@@ -186,22 +178,27 @@ public class TestMenu {
 		}
 
 		int nvvar;
-		System.out.print("Enter address (1-2500): ");
 		try {
-			nvvar = Integer.parseInt(input.nextLine());
-			if (nvvar < 1 || nvvar > 2500) {
-				alertUser("bad address");
-				return;
-			}
+			System.out.print(String.format("Enter address (%d-%d): ", 1, 2500));
+			nvvar = readInt(1, 2500);
 		} catch (NumberFormatException e) {
 			alertUser("bad address");
+			return;
+		}
+
+		int value;
+		try {
+			System.out.print(String.format("Enter value (%d-%d): ", 0, 0xFFFF));
+			value = readInt(0, 0xFFFF);
+		} catch (NumberFormatException e) {
+			alertUser("bad value");
 			return;
 		}
 
 		SappCommand sappCommand;
 
 		try {
-			sappCommand = new Sapp7DCommand(nvvar, 2000);
+			sappCommand = new Sapp7DCommand(nvvar, value);
 			sappCommand.run(sappConnection);
 			System.out.println(sappCommand.isResponseOk() ? "result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {
@@ -219,5 +216,15 @@ public class TestMenu {
 
 		System.out.println("Press enter to continue");
 		input.nextLine();
+	}
+
+	private int readInt(int min, int max) throws NumberFormatException {
+
+		int value = Integer.parseInt(input.nextLine());
+		if (value < min || value > max) {
+			throw new NumberFormatException();
+		}
+
+		return value;
 	}
 }

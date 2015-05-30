@@ -101,7 +101,7 @@ public class TestMenu {
 			System.out.println("99) Exit");
 			System.out.println("=======================================================");
 			System.out.println();
-			System.out.println("Your choice: ");
+			System.out.print("Your choice: ");
 
 			String choice = input.nextLine();
 			if ("1".equals(choice)) {

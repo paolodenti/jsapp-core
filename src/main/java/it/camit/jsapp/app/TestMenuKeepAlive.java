@@ -32,8 +32,6 @@ import it.camit.jsapp.core.util.command.base.SappException;
 
 import java.util.Scanner;
 
-// TODO: comandi da implementare, da 0x70 a 0x82
-
 /**
  * <p>Program for Sapp commands testing.</p>
  *

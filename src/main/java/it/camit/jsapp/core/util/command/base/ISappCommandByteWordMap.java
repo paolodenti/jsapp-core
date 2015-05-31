@@ -17,31 +17,13 @@
  * limitations under the License.
  */
 
-package it.camit.jsapp.core.util.command;
-
-import it.camit.jsapp.core.util.SappByteBuffer;
-import it.camit.jsapp.core.util.command.base.ISappCommandByteWordMap;
-import it.camit.jsapp.core.util.command.base.SappCommand;
+package it.camit.jsapp.core.util.command.base;
 
 /**
- * <p>Sapp Command 0x80</p>
+ * <p>Interface for commands returning a map of address/word</p>
  *
  * @author Paolo Denti
  */
-// TODO sistemare con lettura 6 byte invece di 8
-// TODO completare con il controllo di num valori = 32 e fare chiamate aggiuntive
-public class Sapp80Command extends SappCommand implements ISappCommandByteWordMap {
+public interface ISappCommandByteWordMap {
 
-	/**
-	 * <p>0x80 command constructor.</p>
-	 */
-	public Sapp80Command() {
-
-		super();
-
-		SappByteBuffer buffer = new SappByteBuffer();
-		buffer.addByte((byte) 0x80);
-
-		this.command = buffer.getArray();
-	}
 }

@@ -117,6 +117,40 @@ public class SappResponse {
 	}
 
 	/**
+	 *  @return interpreted response data, couples of 4 bytes tuples are interpreted as hex-ascii bytes in order to build a map (address as byte, value a word)
+	 */
+	public Map<Byte, Integer> getDataAsByteWordMap() {
+
+		Map<Byte, Integer> resultMap = new HashMap<Byte, Integer>();
+
+		for (int i = 0; i < data.length; i += 6) {
+			byte key = 0;
+			for (int j = 0; j < 2; j++) {
+				if (i + j < data.length) {
+					key = (byte) (key << 4);
+					key += SappUtils.getByteFromHexAsciiCode(data[i + j]);
+				} else {
+					break; // premature end of data
+				}
+			}
+
+			int value = 0;
+			for (int j = 4; j < 8; j++) {
+				if (i + j < data.length) {
+					value = value << 4;
+					value += SappUtils.getByteFromHexAsciiCode(data[i + j]);
+				} else {
+					break; // premature end of data
+				}
+			}
+
+			resultMap.put(new Byte(key), new Integer(value));
+		}
+
+		return resultMap;
+	}
+
+	/**
 	 *  @return interpreted response data, couples of 4 bytes tuples are interpreted as hex-ascii bytes in order to build a map (address as word, value a word)
 	 */
 	public Map<Integer, Integer> getDataAsWordWordMap() {

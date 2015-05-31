@@ -20,7 +20,7 @@
 package it.camit.jsapp.core.util.command;
 
 import it.camit.jsapp.core.util.SappByteBuffer;
-import it.camit.jsapp.core.util.command.base.ISappCommandWordWordMap;
+import it.camit.jsapp.core.util.command.base.ISappCommandByteWordMap;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
@@ -30,7 +30,7 @@ import it.camit.jsapp.core.util.command.base.SappCommand;
  */
 // TODO sistemare con lettura 6 byte invece di 8
 // TODO completare con il controllo di num valori = 32 e fare chiamate aggiuntive
-public class Sapp81Command extends SappCommand implements ISappCommandWordWordMap {
+public class Sapp81Command extends SappCommand implements ISappCommandByteWordMap {
 
 	/**
 	 * <p>0x81 command constructor.</p>

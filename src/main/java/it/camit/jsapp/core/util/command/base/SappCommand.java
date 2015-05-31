@@ -208,7 +208,7 @@ public class SappCommand {
 				throw new SappException("bad checksum");
 			}
 
-			return new SappResponse((byte) commandStatus, byteBuffer.getArray());
+			return new SappResponse(commandStatus, byteBuffer.getArray());
 		} finally {
 			if (selector != null) {
 				try {

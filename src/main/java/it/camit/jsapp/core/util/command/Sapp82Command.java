@@ -22,13 +22,15 @@ package it.camit.jsapp.core.util.command;
 import it.camit.jsapp.core.util.SappByteBuffer;
 import it.camit.jsapp.core.util.command.base.ISappCommandWordWordMap;
 import it.camit.jsapp.core.util.command.base.SappCommand;
+import it.camit.jsapp.core.util.command.base.SappConnection;
+import it.camit.jsapp.core.util.command.base.SappException;
+import it.camit.jsapp.core.util.command.base.SappResponse;
 
 /**
  * <p>Sapp Command 0x82</p>
  *
  * @author Paolo Denti
  */
-// TODO completare con il controllo di num valori = 32 e fare chiamate aggiuntive
 public class Sapp82Command extends SappCommand implements ISappCommandWordWordMap {
 
 	/**
@@ -42,5 +44,29 @@ public class Sapp82Command extends SappCommand implements ISappCommandWordWordMa
 		buffer.addByte((byte) 0x82);
 
 		this.command = buffer.getArray();
+	}
+
+	@Override
+	public void run(SappConnection sappConnection) throws SappException {
+		try {
+			super.run(sappConnection);
+
+			SappResponse sappResponse = new SappResponse(response.getStatus(), response.getData());;
+
+			while (isResponseOk() && response.getData().length == (32 * 8)) { // 32 values returned, query again
+				super.run(sappConnection);
+
+				if (isResponseOk() && response.getData().length > 0) {
+					byte[] newData = new byte[sappResponse.getData().length + response.getData().length];
+					System.arraycopy(sappResponse.getData(), 0, newData, 0, sappResponse.getData().length);
+					System.arraycopy(response.getData(), 0, newData, sappResponse.getData().length, response.getData().length);
+					sappResponse  = new SappResponse((byte) response.getStatus(), newData);
+				}
+			}
+
+			response = sappResponse;
+		} catch (SappException e) {
+			throw e;
+		}
 	}
 }

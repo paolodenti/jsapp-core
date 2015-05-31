@@ -34,7 +34,7 @@ public class Sapp7ACommand extends SappCommand implements ISappCommandNoResult {
 	/**
 	 * <p>0x7A command constructor.</p>
 	 *
-	 * @param nvvar  first virtual variable address
+	 * @param nmod  first module number
 	 * @param len  number of virtual variables to write (max 32)
 	 * @param values  values to save
 	 */

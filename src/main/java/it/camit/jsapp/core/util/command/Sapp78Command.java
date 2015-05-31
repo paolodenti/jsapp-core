@@ -34,7 +34,7 @@ public class Sapp78Command extends SappCommand implements ISappCommandNoResult {
 	/**
 	 * <p>0x78 command constructor.</p>
 	 *
-	 * @param nvvar  virtual variable address
+	 * @param nmod  module number
 	 * @param value  value to save
 	 */
 	public Sapp78Command(byte nmod, int value) {

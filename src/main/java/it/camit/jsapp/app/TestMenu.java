@@ -263,7 +263,7 @@ public class TestMenu {
 		for (int i = 0; i < values.length; i++) {
 			while (true) {
 				try {
-					System.out.print(String.format("Enter value #%d (%d-%d): ", i, 0, 0xFFFF));
+					System.out.print(String.format("Enter value #%d (%d-%d): ", i + 1, 0, 0xFFFF));
 					values[i] = readInt(0, 0xFFFF);
 					break;
 				} catch (NumberFormatException e) {

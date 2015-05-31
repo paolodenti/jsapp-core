@@ -70,6 +70,25 @@ public class SappResponse {
 	}
 
 	/**
+	 *  @return interpreted response data, 2 bytes are interpreted as hex-ascii bytes in order to build a byte
+	 */
+	public int getDataAsByte() {
+
+		int result = 0;
+
+		for (int i = 0; i < 2; i++) {
+			if (i < data.length) {
+				result = result << 4;
+				result += SappUtils.getByteFromHexAsciiCode(data[i]);
+			} else {
+				break; // premature end of data
+			}
+		}
+
+		return result;
+	}
+
+	/**
 	 *  @return interpreted response data, 4 bytes are interpreted as hex-ascii bytes in order to build a word
 	 */
 	public int getDataAsWord() {
@@ -86,6 +105,34 @@ public class SappResponse {
 		}
 
 		return result;
+	}
+
+	/**
+	 *  @return interpreted response data, 2 bytes couples are interpreted as hex-ascii bytes in order to build a byte array
+	 */
+	public int[] getDataAsByteArray() {
+
+		if (data.length < 2) {
+			return null;
+		}
+
+		int[] resultArr = new int[data.length / 2];
+
+		for (int i = 0; i < data.length; i += 2) {
+			int result = 0;
+			for (int j = 0; j < 2; j++) {
+				if (i + j < data.length) {
+					result = result << 4;
+					result += SappUtils.getByteFromHexAsciiCode(data[i + j]);
+				} else {
+					break; // premature end of data
+				}
+			}
+
+			resultArr[i / 2] = result;
+		}
+
+		return resultArr;
 	}
 
 	/**

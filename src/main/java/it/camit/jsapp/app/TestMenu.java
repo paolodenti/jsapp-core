@@ -20,6 +20,8 @@
 package it.camit.jsapp.app;
 
 import it.camit.jsapp.core.util.SappUtils;
+import it.camit.jsapp.core.util.command.Sapp70Command;
+import it.camit.jsapp.core.util.command.Sapp71Command;
 import it.camit.jsapp.core.util.command.Sapp74Command;
 import it.camit.jsapp.core.util.command.Sapp75Command;
 import it.camit.jsapp.core.util.command.Sapp76Command;
@@ -86,6 +88,8 @@ public class TestMenu {
 
 			System.out.println(" 1) Change device address & port");
 			System.out.println();
+			System.out.println("70) execute 0x70 command (Get User Alarm Status)");
+			System.out.println("71) execute 0x71 command (Get Message Status)");
 			System.out.println("74) execute 0x74 command (Get Input Status WORD)");
 			System.out.println("75) execute 0x75 command (Get Output Status WORD)");
 			System.out.println("76) execute 0x76 command (Get Input Status 32 WORD)");
@@ -110,6 +114,12 @@ public class TestMenu {
 			String choice = input.nextLine();
 			if ("1".equals(choice)) {
 				getDeviceAddress();
+			} else if ("70".equalsIgnoreCase(choice)) {
+				execute70();
+				requireEnter();
+			} else if ("71".equalsIgnoreCase(choice)) {
+				execute71();
+				requireEnter();
 			} else if ("74".equalsIgnoreCase(choice)) {
 				execute74();
 				requireEnter();
@@ -192,6 +202,50 @@ public class TestMenu {
 				hostName = null;
 				portNumber = 0;
 			}
+		}
+	}
+
+	private void execute70() {
+
+		byte nalm;
+		try {
+			System.out.print(String.format("Enter alarm number (%d-%d): ", 1, 200));
+			nalm = (byte) readInt(1, 200);
+		} catch (NumberFormatException e) {
+			alertUser("bad alarm number");
+			return;
+		}
+
+		SappCommand sappCommand;
+
+		try {
+			sappCommand = new Sapp70Command(nalm);
+			sappCommand.run(hostName, portNumber);
+			System.out.println(sappCommand.isResponseOk() ? "raw response: " + sappCommand.getResponse().toString() + " - result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
+		} catch (SappException e) {
+			System.err.println(String.format("Command execution failed: %s", e.getMessage()));
+		}
+	}
+
+	private void execute71() {
+
+		byte nmsg;
+		try {
+			System.out.print(String.format("Enter message number (%d-%d): ", 1, 250));
+			nmsg = (byte) readInt(1, 250);
+		} catch (NumberFormatException e) {
+			alertUser("bad message number");
+			return;
+		}
+
+		SappCommand sappCommand;
+
+		try {
+			sappCommand = new Sapp71Command(nmsg);
+			sappCommand.run(hostName, portNumber);
+			System.out.println(sappCommand.isResponseOk() ? "raw response: " + sappCommand.getResponse().toString() + " - result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
+		} catch (SappException e) {
+			System.err.println(String.format("Command execution failed: %s", e.getMessage()));
 		}
 	}
 

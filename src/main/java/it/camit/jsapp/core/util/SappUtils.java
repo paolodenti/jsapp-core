@@ -19,6 +19,8 @@
 
 package it.camit.jsapp.core.util;
 
+import it.camit.jsapp.core.util.command.base.ISappCommandByte;
+import it.camit.jsapp.core.util.command.base.ISappCommandByteArray;
 import it.camit.jsapp.core.util.command.base.ISappCommandByteWordMap;
 import it.camit.jsapp.core.util.command.base.ISappCommandNoResult;
 import it.camit.jsapp.core.util.command.base.ISappCommandWord;
@@ -138,8 +140,12 @@ public class SappUtils {
 
 		if (sappCommand instanceof ISappCommandNoResult) {
 			return "";
+		} else if (sappCommand instanceof ISappCommandByte) {
+			return sappCommand.getResponse() == null ? "" : String.format("%d", sappCommand.getResponse().getDataAsByte());
 		} else if (sappCommand instanceof ISappCommandWord) {
 			return sappCommand.getResponse() == null ? "" : String.format("%d", sappCommand.getResponse().getDataAsWord());
+		} else if (sappCommand instanceof ISappCommandByteArray) {
+			return sappCommand.getResponse() == null ? "" : prettyPrintWordArray(sappCommand.getResponse().getDataAsByteArray());
 		} else if (sappCommand instanceof ISappCommandWordArray) {
 			return sappCommand.getResponse() == null ? "" : prettyPrintWordArray(sappCommand.getResponse().getDataAsWordArray());
 		} else if (sappCommand instanceof ISappCommandByteWordMap) {

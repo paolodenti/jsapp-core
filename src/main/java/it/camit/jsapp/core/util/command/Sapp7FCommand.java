@@ -25,7 +25,7 @@ import it.camit.jsapp.core.util.command.base.ISappCommandNoResult;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
- * <p>Sapp Command 0x7F</p>
+ * <p>Sapp Command 0x7F - Set Virtual Status 32 WORD</p>
  *
  * @author Paolo Denti
  */

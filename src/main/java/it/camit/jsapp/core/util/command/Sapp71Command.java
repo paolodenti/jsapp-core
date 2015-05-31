@@ -25,7 +25,7 @@ import it.camit.jsapp.core.util.command.base.ISappCommandByte;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
- * <p>Sapp Command 0x71</p>
+ * <p>Sapp Command 0x71 - Get Message Status</p>
  *
  * @author Paolo Denti
  */

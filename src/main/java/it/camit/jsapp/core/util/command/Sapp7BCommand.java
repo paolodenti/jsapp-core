@@ -25,7 +25,7 @@ import it.camit.jsapp.core.util.command.base.ISappCommandNoResult;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
- * <p>Sapp Command 0x7B</p>
+ * <p>Sapp Command 0x7B - Set Output Status 32 WORD</p>
  *
  * @author Paolo Denti
  */

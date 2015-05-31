@@ -25,7 +25,7 @@ import it.camit.jsapp.core.util.command.base.ISappCommandByteArray;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
- * <p>Sapp Command 0x72</p>
+ * <p>Sapp Command 0x72 - Get User Alarm Status 32</p>
  *
  * @author Paolo Denti
  */

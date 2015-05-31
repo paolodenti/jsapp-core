@@ -25,7 +25,7 @@ import it.camit.jsapp.core.util.command.base.ISappCommandNoResult;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
- * <p>Sapp Command 0x79</p>
+ * <p>Sapp Command 0x79 - Set Output Status WORD</p>
  *
  * @author Paolo Denti
  */

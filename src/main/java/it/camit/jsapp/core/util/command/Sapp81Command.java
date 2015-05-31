@@ -27,7 +27,7 @@ import it.camit.jsapp.core.util.command.base.SappException;
 import it.camit.jsapp.core.util.command.base.SappResponse;
 
 /**
- * <p>Sapp Command 0x81</p>
+ * <p>Sapp Command 0x81 - Get Last Input WORD</p>
  *
  * @author Paolo Denti
  */

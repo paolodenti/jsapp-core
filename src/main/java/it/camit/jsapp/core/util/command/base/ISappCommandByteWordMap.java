@@ -20,7 +20,7 @@
 package it.camit.jsapp.core.util.command.base;
 
 /**
- * <p>Interface for commands returning a map of address/word</p>
+ * <p>Interface for commands returning a map of byte address / word value</p>
  *
  * @author Paolo Denti
  */

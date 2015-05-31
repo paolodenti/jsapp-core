@@ -25,7 +25,7 @@ import it.camit.jsapp.core.util.command.base.ISappCommandWord;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
- * <p>Sapp Command 0x74</p>
+ * <p>Sapp Command 0x74 - Get Input Status WORD</p>
  *
  * @author Paolo Denti
  */

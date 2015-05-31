@@ -25,7 +25,7 @@ import it.camit.jsapp.core.util.command.base.ISappCommandWord;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
- * <p>Sapp Command 0x7C</p>
+ * <p>Sapp Command 0x7C - Get Virtual Status WORD</p>
  *
  * @author Paolo Denti
  */

@@ -25,7 +25,7 @@ import it.camit.jsapp.core.util.command.base.ISappCommandByteArray;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
- * <p>Sapp Command 0x73</p>
+ * <p>Sapp Command 0x73 - Get User Message Status 32</p>
  *
  * @author Paolo Denti
  */

@@ -25,7 +25,7 @@ import it.camit.jsapp.core.util.command.base.ISappCommandWordArray;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
- * <p>Sapp Command 0x77</p>
+ * <p>Sapp Command 0x77 - Get Output Status 32 WORD</p>
  *
  * @author Paolo Denti
  */

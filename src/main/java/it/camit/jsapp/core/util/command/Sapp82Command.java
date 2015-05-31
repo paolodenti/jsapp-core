@@ -20,7 +20,7 @@
 package it.camit.jsapp.core.util.command;
 
 import it.camit.jsapp.core.util.SappByteBuffer;
-import it.camit.jsapp.core.util.command.base.ISappCommandWordMap;
+import it.camit.jsapp.core.util.command.base.ISappCommandWordWordMap;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
@@ -29,7 +29,7 @@ import it.camit.jsapp.core.util.command.base.SappCommand;
  * @author Paolo Denti
  */
 // TODO completare con il controllo di num valori = 32 e fare chiamate aggiuntive
-public class Sapp82Command extends SappCommand implements ISappCommandWordMap {
+public class Sapp82Command extends SappCommand implements ISappCommandWordWordMap {
 
 	/**
 	 * <p>0x82 command constructor.</p>

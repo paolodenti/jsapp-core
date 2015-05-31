@@ -117,9 +117,9 @@ public class SappResponse {
 	}
 
 	/**
-	 *  @return interpreted response data, couples of 4 bytes tuples are interpreted as hex-ascii bytes in order to build a map (address, value)
+	 *  @return interpreted response data, couples of 4 bytes tuples are interpreted as hex-ascii bytes in order to build a map (address as word, value a word)
 	 */
-	public Map<Integer, Integer> getDataAsWordMap() {
+	public Map<Integer, Integer> getDataAsWordWordMap() {
 
 		Map<Integer, Integer> resultMap = new HashMap<Integer, Integer>();
 

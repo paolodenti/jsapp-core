@@ -22,7 +22,7 @@ package it.camit.jsapp.core.util;
 import it.camit.jsapp.core.util.command.base.ISappCommandNoResult;
 import it.camit.jsapp.core.util.command.base.ISappCommandWord;
 import it.camit.jsapp.core.util.command.base.ISappCommandWordArray;
-import it.camit.jsapp.core.util.command.base.ISappCommandWordMap;
+import it.camit.jsapp.core.util.command.base.ISappCommandWordWordMap;
 import it.camit.jsapp.core.util.command.base.SappCommand;
 
 /**
@@ -141,8 +141,8 @@ public class SappUtils {
 			return sappCommand.getResponse() == null ? "" : String.format("%d", sappCommand.getResponse().getDataAsWord());
 		} else if (sappCommand instanceof ISappCommandWordArray) {
 			return sappCommand.getResponse() == null ? "" : prettyPrintWordArray(sappCommand.getResponse().getDataAsWordArray());
-		} else if (sappCommand instanceof ISappCommandWordMap) {
-			return sappCommand.getResponse() == null ? "" : sappCommand.getResponse().getDataAsWordMap().toString();
+		} else if (sappCommand instanceof ISappCommandWordWordMap) {
+			return sappCommand.getResponse() == null ? "" : sappCommand.getResponse().getDataAsWordWordMap().toString();
 		} else {
 			return sappCommand.getResponse() == null ? "" : sappCommand.getResponse().toString();
 		}

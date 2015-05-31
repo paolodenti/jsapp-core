@@ -24,6 +24,6 @@ package it.camit.jsapp.core.util.command.base;
  *
  * @author Paolo Denti
  */
-public interface ISappCommandWordMap {
+public interface ISappCommandWordWordMap {
 
 }

@@ -135,7 +135,7 @@ public class SappResponse {
 			}
 
 			int value = 0;
-			for (int j = 4; j < 8; j++) {
+			for (int j = 2; j < 6; j++) {
 				if (i + j < data.length) {
 					value = value << 4;
 					value += SappUtils.getByteFromHexAsciiCode(data[i + j]);

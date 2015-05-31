@@ -28,7 +28,6 @@ import it.camit.jsapp.core.util.command.base.SappCommand;
  *
  * @author Paolo Denti
  */
-// TODO sistemare con lettura 6 byte invece di 8
 // TODO completare con il controllo di num valori = 32 e fare chiamate aggiuntive
 public class Sapp81Command extends SappCommand implements ISappCommandByteWordMap {
 

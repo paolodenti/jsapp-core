@@ -23,6 +23,7 @@ import it.camit.jsapp.core.util.SappUtils;
 import it.camit.jsapp.core.util.command.Sapp7CCommand;
 import it.camit.jsapp.core.util.command.Sapp7DCommand;
 import it.camit.jsapp.core.util.command.Sapp7ECommand;
+import it.camit.jsapp.core.util.command.Sapp7FCommand;
 import it.camit.jsapp.core.util.command.Sapp80Command;
 import it.camit.jsapp.core.util.command.Sapp81Command;
 import it.camit.jsapp.core.util.command.Sapp82Command;
@@ -80,6 +81,7 @@ public class TestMenu {
 			System.out.println("7C) execute 0x7C command (Get Virtual Status WORD)");
 			System.out.println("7D) execute 0x7D command (Set Virtual Status WORD)");
 			System.out.println("7E) execute 0x7E command (Get Virtual Status 32 WORD)");
+			System.out.println("7F) execute 0x7F command (Set Virtual Status 32 WORD)");
 			System.out.println("80) execute 0x80 command (Get Last Output WORD)");
 			System.out.println("81) execute 0x81 command (Get Last Input WORD)");
 			System.out.println("82) execute 0x82 command (Get Last Virtual WORD)");
@@ -101,6 +103,9 @@ public class TestMenu {
 			} else if ("7E".equalsIgnoreCase(choice)) {
 				execute7E();
 				requireEnter();
+			} else if ("7F".equalsIgnoreCase(choice)) {
+				execute7F();
+				requireEnter();
 			} else if ("80".equalsIgnoreCase(choice)) {
 				execute80();
 				requireEnter();
@@ -118,7 +123,7 @@ public class TestMenu {
 
 	private void getDeviceAddress() {
 
-		while(true) {
+		while (true) {
 			while (true) {
 				System.out.print("Enter device address: ");
 				hostName = input.nextLine();
@@ -227,6 +232,50 @@ public class TestMenu {
 
 		try {
 			sappCommand = new Sapp7ECommand(nvvar, len);
+			sappCommand.run(hostName, portNumber);
+			System.out.println(sappCommand.isResponseOk() ? "raw response: " + sappCommand.getResponse().toString() + " - result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
+		} catch (SappException e) {
+			System.err.println(String.format("Command cxecution failed: %s", e.getMessage()));
+		}
+	}
+
+	private void execute7F() {
+
+		int nvvar;
+		try {
+			System.out.print(String.format("Enter address (%d-%d): ", 1, 2500));
+			nvvar = readInt(1, 2500);
+		} catch (NumberFormatException e) {
+			alertUser("bad address");
+			return;
+		}
+
+		byte len;
+		try {
+			System.out.print(String.format("Enter len (%d-%d): ", 1, 32));
+			len = (byte) readInt(1, 32);
+		} catch (NumberFormatException e) {
+			alertUser("bad value");
+			return;
+		}
+
+		int[] values = new int[len];
+		for (int i = 0; i < values.length; i++) {
+			while (true) {
+				try {
+					System.out.print(String.format("Enter value #%d (%d-%d): ", i, 0, 0xFFFF));
+					values[i] = readInt(0, 0xFFFF);
+					break;
+				} catch (NumberFormatException e) {
+					alertUser("bad value");
+				}
+			}
+		}
+
+		SappCommand sappCommand;
+
+		try {
+			sappCommand = new Sapp7FCommand(nvvar, len, values);
 			sappCommand.run(hostName, portNumber);
 			System.out.println(sappCommand.isResponseOk() ? "raw response: " + sappCommand.getResponse().toString() + " - result: " + SappUtils.prettyPrint(sappCommand) : "command execution failed");
 		} catch (SappException e) {

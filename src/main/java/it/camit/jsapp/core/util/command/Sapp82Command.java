@@ -47,7 +47,7 @@ public class Sapp82Command extends SappCommand implements ISappCommandWordWordMa
 	}
 
 	@Override
-	public void run(SappConnection sappConnection) throws SappException {
+	protected void run(SappConnection sappConnection) throws SappException {
 		try {
 			super.run(sappConnection);
 

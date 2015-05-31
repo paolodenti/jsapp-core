@@ -123,7 +123,7 @@ public class SappCommand {
 	 *
 	 * @param sappConnection  A {@code SappConnection} possibly created by {@link it.camit.jsapp.core.util.command.base.SappConnection SappConnection}
 	 */
-	public void run(SappConnection sappConnection) throws SappException {
+	protected void run(SappConnection sappConnection) throws SappException {
 
 		SocketChannel socketChannel = sappConnection.getSocketChannel();
 

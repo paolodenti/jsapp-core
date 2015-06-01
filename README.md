@@ -18,3 +18,5 @@ JSapp
 ===================
 
 JSapp is a 100% Java Library giving access to the Sinthesi devices home automation hardware via native Sapp Over Ethernet PICnet protocol.
+
+[JSapp core home page](http://paolodenti.github.io/jsapp-core/)

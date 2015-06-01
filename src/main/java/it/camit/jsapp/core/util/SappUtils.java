@@ -19,14 +19,14 @@
 
 package it.camit.jsapp.core.util;
 
-import it.camit.jsapp.core.util.command.base.ISappCommandByte;
-import it.camit.jsapp.core.util.command.base.ISappCommandByteArray;
-import it.camit.jsapp.core.util.command.base.ISappCommandByteWordMap;
-import it.camit.jsapp.core.util.command.base.ISappCommandNoResult;
-import it.camit.jsapp.core.util.command.base.ISappCommandWord;
-import it.camit.jsapp.core.util.command.base.ISappCommandWordArray;
-import it.camit.jsapp.core.util.command.base.ISappCommandWordWordMap;
-import it.camit.jsapp.core.util.command.base.SappCommand;
+import it.camit.jsapp.core.command.base.ISappCommandByte;
+import it.camit.jsapp.core.command.base.ISappCommandByteArray;
+import it.camit.jsapp.core.command.base.ISappCommandByteWordMap;
+import it.camit.jsapp.core.command.base.ISappCommandNoResult;
+import it.camit.jsapp.core.command.base.ISappCommandWord;
+import it.camit.jsapp.core.command.base.ISappCommandWordArray;
+import it.camit.jsapp.core.command.base.ISappCommandWordWordMap;
+import it.camit.jsapp.core.command.base.SappCommand;
 
 /**
  * <p>Utility class for bytes manipulation</p>

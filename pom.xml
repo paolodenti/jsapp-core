@@ -6,10 +6,29 @@
 	<artifactId>jsapp-core</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
-
 	<name>jsapp-core</name>
-
 	<description>jsapp-core library - java wrapper for Sapp Sinthesi protocol</description>
+	<url>http://paolodenti.github.io/jsapp-core/</url>
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Paolo Denti</name>
+			<email>paolo.denti@gmail.com</email>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>https://github.com/paolodenti/jsapp-core.git</connection>
+		<developerConnection>scm:git@github.com:paolodenti/jsapp-core.git</developerConnection>
+		<url>https://github.com/paolodenti/jsapp-core</url>
+	</scm>
 
 	<properties>
 		<maven.test.skip>true</maven.test.skip>

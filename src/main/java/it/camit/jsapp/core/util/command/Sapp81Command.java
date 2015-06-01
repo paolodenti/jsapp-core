@@ -28,6 +28,7 @@ import it.camit.jsapp.core.util.command.base.SappResponse;
 
 /**
  * <p>Sapp Command 0x81 - Get Last Input WORD</p>
+ * <p>Returns ALL the modified inputs, while the original Sapp command returns max 32 results</p>
  *
  * @author Paolo Denti
  */

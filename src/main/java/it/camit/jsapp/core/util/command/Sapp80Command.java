@@ -28,6 +28,7 @@ import it.camit.jsapp.core.util.command.base.SappResponse;
 
 /**
  * <p>Sapp Command 0x80 - Get Last Output WORD</p>
+ * <p>Returns ALL the modified outputs, while the original Sapp command returns max 32 results</p>
  *
  * @author Paolo Denti
  */

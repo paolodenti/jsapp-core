@@ -28,6 +28,7 @@ import it.camit.jsapp.core.util.command.base.SappResponse;
 
 /**
  * <p>Sapp Command 0x82 - Get Last Virtual WORD</p>
+ * <p>Returns ALL the modified virtuals, while the original Sapp command returns max 32 results</p>
  *
  * @author Paolo Denti
  */

@@ -3,12 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>it.camit.jsapp</groupId>
-	<artifactId>core</artifactId>
+	<artifactId>jsapp-core</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
 	<name>jsapp-core</name>
-	<url>http://maven.apache.org</url>
 
 	<properties>
 		<maven.test.skip>true</maven.test.skip>
@@ -100,4 +99,5 @@
 			<version>${logback.version}</version>
 		</dependency>
 	</dependencies>
+	<description>jsapp-core library - java wrapper for Sapp Sinthesi protocol</description>
 </project>

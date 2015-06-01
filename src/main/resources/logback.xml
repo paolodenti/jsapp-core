@@ -8,7 +8,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="it.camit.jsapp" level="DEBUG" additivity="false">
+	<logger name="com.github.paolodenti.jsapp" level="DEBUG" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
 

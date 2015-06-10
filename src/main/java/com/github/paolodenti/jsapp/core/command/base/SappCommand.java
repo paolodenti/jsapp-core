@@ -103,12 +103,12 @@ public class SappCommand {
 	 * @param hostName  the device address or hostname
 	 * @param portNumber  the device port
 	 */
-	public void run(String hostName, int portNumber) throws SappException {
+	public final void run(String hostName, int portNumber) throws SappException {
 
 		SappConnection sappConnection = new SappConnection(hostName, portNumber);
 		try {
 			sappConnection.openConnection();
-			run(sappConnection);
+			internalRun(sappConnection);
 		} catch (IOException e) {
 			throw new SappException(e.getMessage());
 		} finally {
@@ -123,7 +123,19 @@ public class SappCommand {
 	 *
 	 * @param sappConnection  A {@code SappConnection} possibly created by {@link com.github.paolodenti.jsapp.core.command.base.SappConnection SappConnection}
 	 */
-	protected void run(SappConnection sappConnection) throws SappException {
+	public final void run(SappConnection sappConnection) throws SappException {
+
+		internalRun(sappConnection);
+	}
+
+	/**
+	 * <p>Executes the command. Protected method that does the real job. Should be overridden by {@code SappCommands} subclasses in order to customize actual execution</p>
+	 *
+	 * <p>A SappConnection must be provided. To be used for processes that keep a SappConnection alive.</p>
+	 *
+	 * @param sappConnection  A {@code SappConnection} possibly created by {@link com.github.paolodenti.jsapp.core.command.base.SappConnection SappConnection}
+	 */
+	protected void internalRun(SappConnection sappConnection) throws SappException {
 
 		SocketChannel socketChannel = sappConnection.getSocketChannel();
 

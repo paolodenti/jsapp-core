@@ -48,14 +48,14 @@ public class Sapp82Command extends SappCommand implements ISappCommandWordWordMa
 	}
 
 	@Override
-	protected void run(SappConnection sappConnection) throws SappException {
+	protected void internalRun(SappConnection sappConnection) throws SappException {
 		try {
-			super.run(sappConnection);
+			super.internalRun(sappConnection);
 
 			SappResponse sappResponse = new SappResponse(response.getStatus(), response.getData());;
 
 			while (isResponseOk() && response.getData().length == (32 * 8)) { // 32 values returned, query again
-				super.run(sappConnection);
+				super.internalRun(sappConnection);
 
 				if (isResponseOk() && response.getData().length > 0) {
 					byte[] newData = new byte[sappResponse.getData().length + response.getData().length];

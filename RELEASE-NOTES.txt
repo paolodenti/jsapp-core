@@ -1,5 +1,5 @@
-                                  JSapp
-                               Version 1.0
+                              === JSapp ===
+                              Version 1.0.2
                               Release Notes
 
 
@@ -14,14 +14,12 @@ COMPATIBILITY
 
 The library is based on version Sapp PICNET specification version 3.3
 
-NEW FEATURES
-==============
-
-
 FIXED BUGS
 ============
-
 
 CHANGES
 =========
 
+1.0.1: a Sapp connection can be passed to SappCommand.run in order to reuse the same connection for multiple command execution
+
+1.0.2: added new commands: 0x90, 0x91

@@ -19,6 +19,8 @@
 
 package com.github.paolodenti.jsapp.core.util;
 
+import java.util.Map;
+
 import com.github.paolodenti.jsapp.core.command.base.ISappCommandByte;
 import com.github.paolodenti.jsapp.core.command.base.ISappCommandByteArray;
 import com.github.paolodenti.jsapp.core.command.base.ISappCommandByteWordMap;
@@ -141,17 +143,17 @@ public class SappUtils {
 		if (sappCommand instanceof ISappCommandNoResult) {
 			return "";
 		} else if (sappCommand instanceof ISappCommandByte) {
-			return sappCommand.getResponse() == null ? "" : String.format("%d", sappCommand.getResponse().getDataAsByte());
+			return sappCommand.getResponse() == null ? "" : String.format("%d", byteToUnsigned(sappCommand.getResponse().getDataAsByte()));
 		} else if (sappCommand instanceof ISappCommandWord) {
 			return sappCommand.getResponse() == null ? "" : String.format("%d", sappCommand.getResponse().getDataAsWord());
 		} else if (sappCommand instanceof ISappCommandByteArray) {
-			return sappCommand.getResponse() == null ? "" : prettyPrintWordArray(sappCommand.getResponse().getDataAsByteArray());
+			return sappCommand.getResponse() == null ? "" : prettyPrintByteArray(sappCommand.getResponse().getDataAsByteArray());
 		} else if (sappCommand instanceof ISappCommandWordArray) {
 			return sappCommand.getResponse() == null ? "" : prettyPrintWordArray(sappCommand.getResponse().getDataAsWordArray());
 		} else if (sappCommand instanceof ISappCommandByteWordMap) {
-			return sappCommand.getResponse() == null ? "" : sappCommand.getResponse().getDataAsByteWordMap().toString();
+			return sappCommand.getResponse() == null ? "" : prettyPrintByteWordMap(sappCommand.getResponse().getDataAsByteWordMap());
 		} else if (sappCommand instanceof ISappCommandWordWordMap) {
-			return sappCommand.getResponse() == null ? "" : sappCommand.getResponse().getDataAsWordWordMap().toString();
+			return sappCommand.getResponse() == null ? "" : prettyPrintWordWordMap(sappCommand.getResponse().getDataAsWordWordMap());
 		} else {
 			return sappCommand.getResponse() == null ? "" : sappCommand.getResponse().toString();
 		}
@@ -160,12 +162,57 @@ public class SappUtils {
 	/**
 	 * @return a pretty formatted byte array
 	 */
+	private static String prettyPrintByteArray(byte[] data) {
+
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("[ ");
+		for (int i = 0; i < data.length; i++) {
+			stringBuffer.append(byteToUnsigned(data[i])).append(" ");
+		}
+		stringBuffer.append("]");
+
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * @return a pretty formatted word array
+	 */
 	private static String prettyPrintWordArray(int[] data) {
 
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("[ ");
 		for (int i = 0; i < data.length; i++) {
 			stringBuffer.append(data[i]).append(" ");
+		}
+		stringBuffer.append("]");
+
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * @return a pretty formatted byte-word map
+	 */
+	private static String prettyPrintByteWordMap(Map<Byte, Integer> data) {
+
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("[ ");
+		for (Byte key : data.keySet()) {
+			stringBuffer.append(String.format("%d-%d", byteToUnsigned(key), data.get(key))).append(" ");
+		}
+		stringBuffer.append("]");
+
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * @return a pretty formatted word-word map
+	 */
+	private static String prettyPrintWordWordMap(Map<Integer, Integer> data) {
+
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("[ ");
+		for (Integer key : data.keySet()) {
+			stringBuffer.append(String.format("%d-%d", key, data.get(key))).append(" ");
 		}
 		stringBuffer.append("]");
 

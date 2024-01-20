@@ -4,7 +4,7 @@
 
 	<groupId>com.github.paolodenti.jsapp</groupId>
 	<artifactId>jsapp-core</artifactId>
-	<version>1.0.3</version>
+	<version>1.1.0</version>
 	<packaging>jar</packaging>
 	<name>jsapp-core</name>
 	<description>jsapp-core library - java wrapper for Sapp Sinthesi protocol</description>

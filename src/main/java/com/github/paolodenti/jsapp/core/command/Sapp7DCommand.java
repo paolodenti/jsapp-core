@@ -31,21 +31,21 @@ import com.github.paolodenti.jsapp.core.util.SappUtils;
  */
 public class Sapp7DCommand extends SappCommand implements ISappCommandNoResult {
 
-	/**
-	 * <p>0x7D command constructor.</p>
-	 *
-	 * @param nvvar  virtual variable address
-	 * @param value  value to save
-	 */
-	public Sapp7DCommand(int nvvar, int value) {
+    /**
+     * <p>0x7D command constructor.</p>
+     *
+     * @param nvvar virtual variable address
+     * @param value value to save
+     */
+    public Sapp7DCommand(int nvvar, int value) {
 
-		super();
+        super();
 
-		SappByteBuffer buffer = new SappByteBuffer();
-		buffer.addByte((byte) 0x7D);
-		buffer.addBytes(SappUtils.getHexAsciiWord(nvvar));
-		buffer.addBytes(SappUtils.getHexAsciiWord(value));
+        SappByteBuffer buffer = new SappByteBuffer();
+        buffer.addByte((byte) 0x7D);
+        buffer.addBytes(SappUtils.getHexAsciiWord(nvvar));
+        buffer.addBytes(SappUtils.getHexAsciiWord(value));
 
-		this.command = buffer.getArray();
-	}
+        this.command = buffer.getArray();
+    }
 }

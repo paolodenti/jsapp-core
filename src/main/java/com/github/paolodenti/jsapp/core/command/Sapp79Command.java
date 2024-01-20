@@ -31,21 +31,21 @@ import com.github.paolodenti.jsapp.core.util.SappUtils;
  */
 public class Sapp79Command extends SappCommand implements ISappCommandNoResult {
 
-	/**
-	 * <p>0x79 command constructor.</p>
-	 *
-	 * @param nmod  module number
-	 * @param value  value to save
-	 */
-	public Sapp79Command(byte nmod, int value) {
+    /**
+     * <p>0x79 command constructor.</p>
+     *
+     * @param nmod  module number
+     * @param value value to save
+     */
+    public Sapp79Command(byte nmod, int value) {
 
-		super();
+        super();
 
-		SappByteBuffer buffer = new SappByteBuffer();
-		buffer.addByte((byte) 0x79);
-		buffer.addBytes(SappUtils.getHexAsciiByte(nmod));
-		buffer.addBytes(SappUtils.getHexAsciiWord(value));
+        SappByteBuffer buffer = new SappByteBuffer();
+        buffer.addByte((byte) 0x79);
+        buffer.addBytes(SappUtils.getHexAsciiByte(nmod));
+        buffer.addBytes(SappUtils.getHexAsciiWord(value));
 
-		this.command = buffer.getArray();
-	}
+        this.command = buffer.getArray();
+    }
 }

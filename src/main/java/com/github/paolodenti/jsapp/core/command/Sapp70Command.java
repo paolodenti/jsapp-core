@@ -31,19 +31,19 @@ import com.github.paolodenti.jsapp.core.util.SappUtils;
  */
 public class Sapp70Command extends SappCommand implements ISappCommandByte {
 
-	/**
-	 * <p>0x70 command constructor.</p>
-	 *
-	 * @param nalm  alarm number
-	 */
-	public Sapp70Command(byte nalm) {
+    /**
+     * <p>0x70 command constructor.</p>
+     *
+     * @param nalm alarm number
+     */
+    public Sapp70Command(byte nalm) {
 
-		super();
+        super();
 
-		SappByteBuffer buffer = new SappByteBuffer();
-		buffer.addByte((byte) 0x70);
-		buffer.addBytes(SappUtils.getHexAsciiByte(nalm));
+        SappByteBuffer buffer = new SappByteBuffer();
+        buffer.addByte((byte) 0x70);
+        buffer.addBytes(SappUtils.getHexAsciiByte(nalm));
 
-		this.command = buffer.getArray();
-	}
+        this.command = buffer.getArray();
+    }
 }

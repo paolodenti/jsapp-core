@@ -19,11 +19,7 @@
 
 package com.github.paolodenti.jsapp.core.command;
 
-import com.github.paolodenti.jsapp.core.command.base.ISappCommandByteWordMap;
-import com.github.paolodenti.jsapp.core.command.base.SappCommand;
-import com.github.paolodenti.jsapp.core.command.base.SappConnection;
-import com.github.paolodenti.jsapp.core.command.base.SappException;
-import com.github.paolodenti.jsapp.core.command.base.SappResponse;
+import com.github.paolodenti.jsapp.core.command.base.*;
 import com.github.paolodenti.jsapp.core.util.SappByteBuffer;
 
 /**
@@ -34,40 +30,36 @@ import com.github.paolodenti.jsapp.core.util.SappByteBuffer;
  */
 public class Sapp80Command extends SappCommand implements ISappCommandByteWordMap {
 
-	/**
-	 * <p>0x80 command constructor.</p>
-	 */
-	public Sapp80Command() {
+    /**
+     * <p>0x80 command constructor.</p>
+     */
+    public Sapp80Command() {
 
-		super();
+        super();
 
-		SappByteBuffer buffer = new SappByteBuffer();
-		buffer.addByte((byte) 0x80);
+        SappByteBuffer buffer = new SappByteBuffer();
+        buffer.addByte((byte) 0x80);
 
-		this.command = buffer.getArray();
-	}
+        this.command = buffer.getArray();
+    }
 
-	@Override
-	protected void internalRun(SappConnection sappConnection) throws SappException {
-		try {
-			super.internalRun(sappConnection);
+    @Override
+    protected void internalRun(SappConnection sappConnection) throws SappException {
+        super.internalRun(sappConnection);
 
-			SappResponse sappResponse = new SappResponse(response.getStatus(), response.getData());;
+        SappResponse sappResponse = new SappResponse(response.getStatus(), response.getData());
 
-			while (isResponseOk() && response.getData().length == (32 * 6)) { // 32 values returned, query again
-				super.internalRun(sappConnection);
+        while (isResponseOk() && response.getData().length == (32 * 6)) { // 32 values returned, query again
+            super.internalRun(sappConnection);
 
-				if (isResponseOk() && response.getData().length > 0) {
-					byte[] newData = new byte[sappResponse.getData().length + response.getData().length];
-					System.arraycopy(sappResponse.getData(), 0, newData, 0, sappResponse.getData().length);
-					System.arraycopy(response.getData(), 0, newData, sappResponse.getData().length, response.getData().length);
-					sappResponse  = new SappResponse((byte) response.getStatus(), newData);
-				}
-			}
+            if (isResponseOk() && response.getData().length > 0) {
+                byte[] newData = new byte[sappResponse.getData().length + response.getData().length];
+                System.arraycopy(sappResponse.getData(), 0, newData, 0, sappResponse.getData().length);
+                System.arraycopy(response.getData(), 0, newData, sappResponse.getData().length, response.getData().length);
+                sappResponse = new SappResponse(response.getStatus(), newData);
+            }
+        }
 
-			response = sappResponse;
-		} catch (SappException e) {
-			throw e;
-		}
-	}
+        response = sappResponse;
+    }
 }

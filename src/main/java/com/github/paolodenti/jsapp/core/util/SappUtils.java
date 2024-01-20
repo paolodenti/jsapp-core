@@ -19,16 +19,9 @@
 
 package com.github.paolodenti.jsapp.core.util;
 
-import java.util.Map;
+import com.github.paolodenti.jsapp.core.command.base.*;
 
-import com.github.paolodenti.jsapp.core.command.base.ISappCommandByte;
-import com.github.paolodenti.jsapp.core.command.base.ISappCommandByteArray;
-import com.github.paolodenti.jsapp.core.command.base.ISappCommandByteWordMap;
-import com.github.paolodenti.jsapp.core.command.base.ISappCommandNoResult;
-import com.github.paolodenti.jsapp.core.command.base.ISappCommandWord;
-import com.github.paolodenti.jsapp.core.command.base.ISappCommandWordArray;
-import com.github.paolodenti.jsapp.core.command.base.ISappCommandWordWordMap;
-import com.github.paolodenti.jsapp.core.command.base.SappCommand;
+import java.util.Map;
 
 /**
  * <p>Utility class for bytes manipulation</p>
@@ -37,185 +30,183 @@ import com.github.paolodenti.jsapp.core.command.base.SappCommand;
  */
 public class SappUtils {
 
-	/**
-	 * <p>Builds a Sapp formatted command, adding start, stop and checksum to the command bytes.</p>
-	 *
-	 * <p>Example:</p>
-	 * <p>0x2A 0x30 0x30 0x30 0x31 0x30 0x30</p>
-	 * <p>becomes</p>
-	 * <p>STX 0x2A 0x30 0x30 0x30 0x31 0x30 0x30 ETX 0x01 0x4B</p>
-	 *
-	 * @param bytes  the commmand bytes
-	 */
-	public static byte[] getCommand(byte[] bytes) {
+    /**
+     * <p>Builds a Sapp formatted command, adding start, stop and checksum to the command bytes.</p>
+     *
+     * <p>Example:</p>
+     * <p>0x2A 0x30 0x30 0x30 0x31 0x30 0x30</p>
+     * <p>becomes</p>
+     * <p>STX 0x2A 0x30 0x30 0x30 0x31 0x30 0x30 ETX 0x01 0x4B</p>
+     *
+     * @param bytes the commmand bytes
+     */
+    public static byte[] getCommand(byte[] bytes) {
 
-		byte command[] = new byte[bytes.length + 4];
+        byte[] command = new byte[bytes.length + 4];
 
-		command[0] = SappConstants.STX;
+        command[0] = SappConstants.STX;
 
-		for (int i = 0; i < bytes.length; i++) {
-			command[i + 1] = bytes[i];
-		}
+        System.arraycopy(bytes, 0, command, 1, bytes.length);
 
-		command[bytes.length + 1] = SappConstants.ETX;
+        command[bytes.length + 1] = SappConstants.ETX;
 
-		byte[] checksum = getChecksum(bytes);
-		command[bytes.length + 2] = checksum[0];
-		command[bytes.length + 3] = checksum[1];
+        byte[] checksum = getChecksum(bytes);
+        command[bytes.length + 2] = checksum[0];
+        command[bytes.length + 3] = checksum[1];
 
-		return command;
-	}
+        return command;
+    }
 
-	/**
-	 * @return two bytes representing low and high bytes of the checksum word
-	 */
-	public static byte[] getChecksum(byte[] bytes) {
+    /**
+     * @return two bytes representing low and high bytes of the checksum word
+     */
+    public static byte[] getChecksum(byte[] bytes) {
 
-		int checksum = 0;
-		for (byte b : bytes) {
-			checksum += (b >= 0 ? b : 256 + b);
-		}
+        int checksum = 0;
+        for (byte b : bytes) {
+            checksum += (b >= 0 ? b : 256 + b);
+        }
 
-		return new byte[] { (byte) ((checksum >> 8) & 0xFF), (byte) (checksum & 0xFF) };
-	}
+        return new byte[]{(byte) ((checksum >> 8) & 0xFF), (byte) (checksum & 0xFF)};
+    }
 
-	/**
-	 * @return two bytes representing a byte value in hex-ascii format
-	 */
-	public static byte[] getHexAsciiByte(byte value) {
+    /**
+     * @return two bytes representing a byte value in hex-ascii format
+     */
+    public static byte[] getHexAsciiByte(byte value) {
 
-		byte[] bytes = new byte[2];
+        byte[] bytes = new byte[2];
 
-		bytes[0] = getHexAsciiCodeFromByte((byte) ((value >> 4) & 0xF));
-		bytes[1] = getHexAsciiCodeFromByte((byte) (value & 0xF));
+        bytes[0] = getHexAsciiCodeFromByte((byte) ((value >> 4) & 0xF));
+        bytes[1] = getHexAsciiCodeFromByte((byte) (value & 0xF));
 
-		return bytes;
-	}
+        return bytes;
+    }
 
-	/**
-	 * @return four bytes representing a word value in hex-ascii format
-	 */
-	public static byte[] getHexAsciiWord(int value) {
+    /**
+     * @return four bytes representing a word value in hex-ascii format
+     */
+    public static byte[] getHexAsciiWord(int value) {
 
-		byte[] bytes = new byte[4];
+        byte[] bytes = new byte[4];
 
-		bytes[0] = getHexAsciiCodeFromByte((byte) ((value >> 12) & 0xF));
-		bytes[1] = getHexAsciiCodeFromByte((byte) ((value >> 8) & 0xF));
-		bytes[2] = getHexAsciiCodeFromByte((byte) ((value >> 4) & 0xF));
-		bytes[3] = getHexAsciiCodeFromByte((byte) (value & 0xF));
+        bytes[0] = getHexAsciiCodeFromByte((byte) ((value >> 12) & 0xF));
+        bytes[1] = getHexAsciiCodeFromByte((byte) ((value >> 8) & 0xF));
+        bytes[2] = getHexAsciiCodeFromByte((byte) ((value >> 4) & 0xF));
+        bytes[3] = getHexAsciiCodeFromByte((byte) (value & 0xF));
 
-		return bytes;
-	}
+        return bytes;
+    }
 
-	/**
-	 * @return hex-ascii value from byte
-	 */
-	public static byte getHexAsciiCodeFromByte(byte value) {
+    /**
+     * @return hex-ascii value from byte
+     */
+    public static byte getHexAsciiCodeFromByte(byte value) {
 
-		return (byte) (value < 10 ? '0' + value  : 'A' + value - 10);
-	}
+        return (byte) (value < 10 ? '0' + value : 'A' + value - 10);
+    }
 
-	/**
-	 * @return byte value from byte in hex-ascii
-	 */
-	public static byte getByteFromHexAsciiCode(byte hexAscii) {
+    /**
+     * @return byte value from byte in hex-ascii
+     */
+    public static byte getByteFromHexAsciiCode(byte hexAscii) {
 
-		return (byte) (hexAscii >= 'A' && hexAscii <= 'F' ? hexAscii - 'A' + 10 : (hexAscii >= 'a' && hexAscii <= 'f' ? hexAscii - 'a' + 10 : hexAscii - '0'));
-	}
+        return (byte) (hexAscii >= 'A' && hexAscii <= 'F' ? hexAscii - 'A' + 10 : (hexAscii >= 'a' && hexAscii <= 'f' ? hexAscii - 'a' + 10 : hexAscii - '0'));
+    }
 
-	/**
-	 * @return int value from byte as if it were unsigned (0-255)
-	 */
-	public static int byteToUnsigned(byte value) {
+    /**
+     * @return int value from byte as if it were unsigned (0-255)
+     */
+    public static int byteToUnsigned(byte value) {
 
-		return value >= 0 ? (int) value : (1 << 8) + value;
-	}
+        return value >= 0 ? (int) value : (1 << 8) + value;
+    }
 
-	/**
-	 * @return a pretty formatted string of SappResponse depending on command type
-	 */
-	public static String prettyPrint(SappCommand sappCommand) {
+    /**
+     * @return a pretty formatted string of SappResponse depending on command type
+     */
+    public static String prettyPrint(SappCommand sappCommand) {
 
-		if (sappCommand == null) {
-			return "";
-		}
+        if (sappCommand == null) {
+            return "";
+        }
 
-		if (sappCommand instanceof ISappCommandNoResult) {
-			return "";
-		} else if (sappCommand instanceof ISappCommandByte) {
-			return sappCommand.getResponse() == null ? "" : String.format("%d", byteToUnsigned(sappCommand.getResponse().getDataAsByte()));
-		} else if (sappCommand instanceof ISappCommandWord) {
-			return sappCommand.getResponse() == null ? "" : String.format("%d", sappCommand.getResponse().getDataAsWord());
-		} else if (sappCommand instanceof ISappCommandByteArray) {
-			return sappCommand.getResponse() == null ? "" : prettyPrintByteArray(sappCommand.getResponse().getDataAsByteArray());
-		} else if (sappCommand instanceof ISappCommandWordArray) {
-			return sappCommand.getResponse() == null ? "" : prettyPrintWordArray(sappCommand.getResponse().getDataAsWordArray());
-		} else if (sappCommand instanceof ISappCommandByteWordMap) {
-			return sappCommand.getResponse() == null ? "" : prettyPrintByteWordMap(sappCommand.getResponse().getDataAsByteWordMap());
-		} else if (sappCommand instanceof ISappCommandWordWordMap) {
-			return sappCommand.getResponse() == null ? "" : prettyPrintWordWordMap(sappCommand.getResponse().getDataAsWordWordMap());
-		} else {
-			return sappCommand.getResponse() == null ? "" : sappCommand.getResponse().toString();
-		}
-	}
+        if (sappCommand instanceof ISappCommandNoResult) {
+            return "";
+        } else if (sappCommand instanceof ISappCommandByte) {
+            return sappCommand.getResponse() == null ? "" : String.format("%d", byteToUnsigned(sappCommand.getResponse().getDataAsByte()));
+        } else if (sappCommand instanceof ISappCommandWord) {
+            return sappCommand.getResponse() == null ? "" : String.format("%d", sappCommand.getResponse().getDataAsWord());
+        } else if (sappCommand instanceof ISappCommandByteArray) {
+            return sappCommand.getResponse() == null ? "" : prettyPrintByteArray(sappCommand.getResponse().getDataAsByteArray());
+        } else if (sappCommand instanceof ISappCommandWordArray) {
+            return sappCommand.getResponse() == null ? "" : prettyPrintWordArray(sappCommand.getResponse().getDataAsWordArray());
+        } else if (sappCommand instanceof ISappCommandByteWordMap) {
+            return sappCommand.getResponse() == null ? "" : prettyPrintByteWordMap(sappCommand.getResponse().getDataAsByteWordMap());
+        } else if (sappCommand instanceof ISappCommandWordWordMap) {
+            return sappCommand.getResponse() == null ? "" : prettyPrintWordWordMap(sappCommand.getResponse().getDataAsWordWordMap());
+        } else {
+            return sappCommand.getResponse() == null ? "" : sappCommand.getResponse().toString();
+        }
+    }
 
-	/**
-	 * @return a pretty formatted byte array
-	 */
-	private static String prettyPrintByteArray(byte[] data) {
+    /**
+     * @return a pretty formatted byte array
+     */
+    private static String prettyPrintByteArray(byte[] data) {
 
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append("[ ");
-		for (int i = 0; i < data.length; i++) {
-			stringBuffer.append(byteToUnsigned(data[i])).append(" ");
-		}
-		stringBuffer.append("]");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[ ");
+        for (byte datum : data) {
+            stringBuilder.append(byteToUnsigned(datum)).append(" ");
+        }
+        stringBuilder.append("]");
 
-		return stringBuffer.toString();
-	}
+        return stringBuilder.toString();
+    }
 
-	/**
-	 * @return a pretty formatted word array
-	 */
-	private static String prettyPrintWordArray(int[] data) {
+    /**
+     * @return a pretty formatted word array
+     */
+    private static String prettyPrintWordArray(int[] data) {
 
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append("[ ");
-		for (int i = 0; i < data.length; i++) {
-			stringBuffer.append(data[i]).append(" ");
-		}
-		stringBuffer.append("]");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[ ");
+        for (int datum : data) {
+            stringBuilder.append(datum).append(" ");
+        }
+        stringBuilder.append("]");
 
-		return stringBuffer.toString();
-	}
+        return stringBuilder.toString();
+    }
 
-	/**
-	 * @return a pretty formatted byte-word map
-	 */
-	private static String prettyPrintByteWordMap(Map<Byte, Integer> data) {
+    /**
+     * @return a pretty formatted byte-word map
+     */
+    private static String prettyPrintByteWordMap(Map<Byte, Integer> data) {
 
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append("[ ");
-		for (Byte key : data.keySet()) {
-			stringBuffer.append(String.format("%d-%d", byteToUnsigned(key), data.get(key))).append(" ");
-		}
-		stringBuffer.append("]");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[ ");
+        for (Byte key : data.keySet()) {
+            stringBuilder.append(String.format("%d-%d", byteToUnsigned(key), data.get(key))).append(" ");
+        }
+        stringBuilder.append("]");
 
-		return stringBuffer.toString();
-	}
+        return stringBuilder.toString();
+    }
 
-	/**
-	 * @return a pretty formatted word-word map
-	 */
-	private static String prettyPrintWordWordMap(Map<Integer, Integer> data) {
+    /**
+     * @return a pretty formatted word-word map
+     */
+    private static String prettyPrintWordWordMap(Map<Integer, Integer> data) {
 
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append("[ ");
-		for (Integer key : data.keySet()) {
-			stringBuffer.append(String.format("%d-%d", key, data.get(key))).append(" ");
-		}
-		stringBuffer.append("]");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[ ");
+        for (Integer key : data.keySet()) {
+            stringBuilder.append(String.format("%d-%d", key, data.get(key))).append(" ");
+        }
+        stringBuilder.append("]");
 
-		return stringBuffer.toString();
-	}
+        return stringBuilder.toString();
+    }
 }

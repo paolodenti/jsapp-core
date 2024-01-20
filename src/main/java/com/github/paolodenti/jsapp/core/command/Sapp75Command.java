@@ -31,19 +31,19 @@ import com.github.paolodenti.jsapp.core.util.SappUtils;
  */
 public class Sapp75Command extends SappCommand implements ISappCommandWord {
 
-	/**
-	 * <p>0x75 command constructor.</p>
-	 *
-	 * @param nmod  module number
-	 */
-	public Sapp75Command(byte nmod) {
+    /**
+     * <p>0x75 command constructor.</p>
+     *
+     * @param nmod module number
+     */
+    public Sapp75Command(byte nmod) {
 
-		super();
+        super();
 
-		SappByteBuffer buffer = new SappByteBuffer();
-		buffer.addByte((byte) 0x75);
-		buffer.addBytes(SappUtils.getHexAsciiByte(nmod));
+        SappByteBuffer buffer = new SappByteBuffer();
+        buffer.addByte((byte) 0x75);
+        buffer.addBytes(SappUtils.getHexAsciiByte(nmod));
 
-		this.command = buffer.getArray();
-	}
+        this.command = buffer.getArray();
+    }
 }

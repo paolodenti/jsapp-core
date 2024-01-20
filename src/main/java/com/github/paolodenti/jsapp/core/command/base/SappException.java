@@ -19,6 +19,8 @@
 
 package com.github.paolodenti.jsapp.core.command.base;
 
+import java.io.Serial;
+
 /**
  * Base Class for Sapp Exceptions
  *
@@ -28,24 +30,26 @@ public class SappException extends Exception {
 
     /**
      * <p>Serialization version.</p>
+     *
      * @see java.io.Serializable
      */
-	private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * <p>Creates a new, uninitialized instance of {@code SappException}.</p>
-	 */
-	public SappException() {
-		super();
-	}
+    /**
+     * <p>Creates a new, uninitialized instance of {@code SappException}.</p>
+     */
+    public SappException() {
+        super();
+    }
 
-	/**
-	 * <p>Creates a new instance of {@code SappException} and initializes it
-	 * with the given message and cause.</p>
-	 *
-	 * @param message the error message
-	 */
-	public SappException(String message) {
-		super(message);
-	}
+    /**
+     * <p>Creates a new instance of {@code SappException} and initializes it
+     * with the given message and cause.</p>
+     *
+     * @param message the error message
+     */
+    public SappException(String message) {
+        super(message);
+    }
 }

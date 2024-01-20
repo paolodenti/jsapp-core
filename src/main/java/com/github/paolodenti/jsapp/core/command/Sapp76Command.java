@@ -31,21 +31,21 @@ import com.github.paolodenti.jsapp.core.util.SappUtils;
  */
 public class Sapp76Command extends SappCommand implements ISappCommandWordArray {
 
-	/**
-	 * <p>0x76 command constructor.</p>
-	 *
-	 * @param nmod  first module number
-	 * @param len  number of virtual variables to read (max 32)
-	 */
-	public Sapp76Command(byte nmod, byte len) {
+    /**
+     * <p>0x76 command constructor.</p>
+     *
+     * @param nmod first module number
+     * @param len  number of virtual variables to read (max 32)
+     */
+    public Sapp76Command(byte nmod, byte len) {
 
-		super();
+        super();
 
-		SappByteBuffer buffer = new SappByteBuffer();
-		buffer.addByte((byte) 0x76);
-		buffer.addBytes(SappUtils.getHexAsciiByte(nmod));
-		buffer.addBytes(SappUtils.getHexAsciiByte(len));
+        SappByteBuffer buffer = new SappByteBuffer();
+        buffer.addByte((byte) 0x76);
+        buffer.addBytes(SappUtils.getHexAsciiByte(nmod));
+        buffer.addBytes(SappUtils.getHexAsciiByte(len));
 
-		this.command = buffer.getArray();
-	}
+        this.command = buffer.getArray();
+    }
 }

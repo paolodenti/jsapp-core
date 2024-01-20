@@ -31,19 +31,19 @@ import com.github.paolodenti.jsapp.core.util.SappUtils;
  */
 public class Sapp7CCommand extends SappCommand implements ISappCommandWord {
 
-	/**
-	 * <p>0x7C command constructor.</p>
-	 *
-	 * @param nvvar  virtual variable address
-	 */
-	public Sapp7CCommand(int nvvar) {
+    /**
+     * <p>0x7C command constructor.</p>
+     *
+     * @param nvvar virtual variable address
+     */
+    public Sapp7CCommand(int nvvar) {
 
-		super();
+        super();
 
-		SappByteBuffer buffer = new SappByteBuffer();
-		buffer.addByte((byte) 0x7C);
-		buffer.addBytes(SappUtils.getHexAsciiWord(nvvar));
+        SappByteBuffer buffer = new SappByteBuffer();
+        buffer.addByte((byte) 0x7C);
+        buffer.addBytes(SappUtils.getHexAsciiWord(nvvar));
 
-		this.command = buffer.getArray();
-	}
+        this.command = buffer.getArray();
+    }
 }

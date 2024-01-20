@@ -31,25 +31,25 @@ import com.github.paolodenti.jsapp.core.util.SappUtils;
  */
 public class Sapp7BCommand extends SappCommand implements ISappCommandNoResult {
 
-	/**
-	 * <p>0x7B command constructor.</p>
-	 *
-	 * @param nmod  first module number
-	 * @param len  number of virtual variables to write (max 32)
-	 * @param values  values to save
-	 */
-	public Sapp7BCommand(byte nmod, byte len, int[] values) {
+    /**
+     * <p>0x7B command constructor.</p>
+     *
+     * @param nmod   first module number
+     * @param len    number of virtual variables to write (max 32)
+     * @param values values to save
+     */
+    public Sapp7BCommand(byte nmod, byte len, int[] values) {
 
-		super();
+        super();
 
-		SappByteBuffer buffer = new SappByteBuffer();
-		buffer.addByte((byte) 0x7B);
-		buffer.addBytes(SappUtils.getHexAsciiByte(nmod));
-		buffer.addBytes(SappUtils.getHexAsciiByte(len));
-		for (int i : values) {
-			buffer.addBytes(SappUtils.getHexAsciiWord(i));
-		}
+        SappByteBuffer buffer = new SappByteBuffer();
+        buffer.addByte((byte) 0x7B);
+        buffer.addBytes(SappUtils.getHexAsciiByte(nmod));
+        buffer.addBytes(SappUtils.getHexAsciiByte(len));
+        for (int i : values) {
+            buffer.addBytes(SappUtils.getHexAsciiWord(i));
+        }
 
-		this.command = buffer.getArray();
-	}
+        this.command = buffer.getArray();
+    }
 }

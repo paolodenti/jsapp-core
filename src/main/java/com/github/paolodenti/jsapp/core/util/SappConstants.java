@@ -26,33 +26,33 @@ package com.github.paolodenti.jsapp.core.util;
  */
 public class SappConstants {
 
-	/**
-	 * Transmission begin
-	 */
-	public static final byte STX = 0x02;
+    /**
+     * Transmission begin
+     */
+    public static final byte STX = 0x02;
 
-	/**
-	 * Transmission end
-	 */
-	public static final byte ETX = 0x03;
+    /**
+     * Transmission end
+     */
+    public static final byte ETX = 0x03;
 
-	/**
-	 * Command correctly received
-	 */
-	public static final byte ACK = 0x06;
+    /**
+     * Command correctly received
+     */
+    public static final byte ACK = 0x06;
 
-	/**
-	 * Error in command
-	 */
-	public static final byte NAK = 0x15;
+    /**
+     * Error in command
+     */
+    public static final byte NAK = 0x15;
 
-	/**
-	 * Command succeeded
-	 */
-	public static final byte RES_OK = 0x00;
+    /**
+     * Command succeeded
+     */
+    public static final byte RES_OK = 0x00;
 
-	/**
-	 * Command failed
-	 */
-	public static final byte RES_KO = 0x01;
+    /**
+     * Command failed
+     */
+    public static final byte RES_KO = 0x01;
 }

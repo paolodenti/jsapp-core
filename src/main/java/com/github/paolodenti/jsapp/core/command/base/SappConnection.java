@@ -19,12 +19,12 @@
 
 package com.github.paolodenti.jsapp.core.command.base;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p>Wrapper for a tcp/ip connection to the device</p>
@@ -33,91 +33,88 @@ import org.slf4j.LoggerFactory;
  */
 public class SappConnection {
 
-	private static final Logger logger = LoggerFactory.getLogger(SappConnection.class);
+    private static final Logger logger = LoggerFactory.getLogger(SappConnection.class);
 
-	/**
-	 * The actual socket channel
-	 */
-	private SocketChannel socketChannel;
+    /**
+     * The actual socket channel
+     */
+    private SocketChannel socketChannel;
 
-	/**
-	 * The device address or hostname
-	 */
-	private String hostName;
+    /**
+     * The device address or hostname
+     */
+    private final String hostName;
 
-	/**
-	 * The device port
-	 */
-	private int portNumber;
+    /**
+     * The device port
+     */
+    private final int portNumber;
 
-	/**
-	 * <p>Creates an unconnected connection to the device.</p>
-	 *
-	 * @param hostName  the device address or hostname
-	 * @param portNumber  the device port
-	 */
-	public SappConnection(String hostName, int portNumber) {
+    /**
+     * <p>Creates an unconnected connection to the device.</p>
+     *
+     * @param hostName   the device address or hostname
+     * @param portNumber the device port
+     */
+    public SappConnection(String hostName, int portNumber) {
 
-		this.hostName = hostName;
-		this.portNumber = portNumber;
-		this.socketChannel = null;
-	}
+        this.hostName = hostName;
+        this.portNumber = portNumber;
+        this.socketChannel = null;
+    }
 
-	/**
-	 * @return the actual socket channel
-	 */
-	public SocketChannel getSocketChannel() {
+    /**
+     * @return the actual socket channel
+     */
+    public SocketChannel getSocketChannel() {
 
-		return socketChannel;
-	}
+        return socketChannel;
+    }
 
-	/**
-	 * <p>Opens the connection to the device.</p>
-	 * <p>If the connection is already open, it is closed and reopened.</p>
-	 *
-	 */
-	public void openConnection() throws IOException {
+    /**
+     * <p>Opens the connection to the device.</p>
+     * <p>If the connection is already open, it is closed and reopened.</p>
+     */
+    public void openConnection() throws IOException {
 
-		try {
-			if (socketChannel != null) {
-				closeConnection();
-			}
+        try {
+            if (socketChannel != null) {
+                closeConnection();
+            }
 
-			socketChannel = SocketChannel.open();
-			socketChannel.configureBlocking(false);
-			socketChannel.connect(new InetSocketAddress(hostName, portNumber));
-			while (!socketChannel.finishConnect()) {
-				;
-			}
-		} catch (Exception e) {
-			this.socketChannel = null;
-			throw e;
-		}
-	}
+            socketChannel = SocketChannel.open();
+            socketChannel.configureBlocking(false);
+            socketChannel.connect(new InetSocketAddress(hostName, portNumber));
+            while (!socketChannel.finishConnect()) {
+            }
+        } catch (Exception e) {
+            this.socketChannel = null;
+            throw e;
+        }
+    }
 
-	/**
-	 * <p>Closes the connection to the device.</p>
-	 * <p>If the connection is not open, no action is executed.</p>
-	 *
-	 */
-	public void closeConnection() {
+    /**
+     * <p>Closes the connection to the device.</p>
+     * <p>If the connection is not open, no action is executed.</p>
+     */
+    public void closeConnection() {
 
-		if (socketChannel != null) {
-			try {
-				socketChannel.close();
-			} catch (IOException e) {
-				logger.error(e.getMessage());
-			} finally {
-				socketChannel = null;
-			}
-		}
-	}
+        if (socketChannel != null) {
+            try {
+                socketChannel.close();
+            } catch (IOException e) {
+                logger.error(e.getMessage());
+            } finally {
+                socketChannel = null;
+            }
+        }
+    }
 
-	/**
-	 * @return {@code true} if connected, {@code false} otherwise.
-	 */
-	public boolean isConnected() {
+    /**
+     * @return {@code true} if connected, {@code false} otherwise.
+     */
+    public boolean isConnected() {
 
-		return socketChannel != null;
-	}
+        return socketChannel != null;
+    }
 }

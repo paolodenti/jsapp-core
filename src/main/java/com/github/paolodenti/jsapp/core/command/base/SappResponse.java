@@ -19,10 +19,10 @@
 
 package com.github.paolodenti.jsapp.core.command.base;
 
+import com.github.paolodenti.jsapp.core.util.SappUtils;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.github.paolodenti.jsapp.core.util.SappUtils;
 
 /**
  * <p>Wrapper for the raw response from the device</p>
@@ -31,216 +31,216 @@ import com.github.paolodenti.jsapp.core.util.SappUtils;
  */
 public class SappResponse {
 
-	/**
-	 * Response status
-	 */
-	private byte status;
+    /**
+     * Response status
+     */
+    private final byte status;
 
-	/**
-	 * Response data
-	 */
-	private byte[] data;
+    /**
+     * Response data
+     */
+    private final byte[] data;
 
-	/**
-	 * Creates a {@code SappResponse}
-	 *
-	 *  @param status  response status ({@link com.github.paolodenti.jsapp.core.util.SappConstants#RES_OK RES_OK} if ok, {@link com.github.paolodenti.jsapp.core.util.SappConstants#RES_KO RES_KO} otherwise)
-	 *  @param data response data, without delimiters and checksum
-	 */
-	public SappResponse(byte status, byte[] data) {
+    /**
+     * Creates a {@code SappResponse}
+     *
+     * @param status response status ({@link com.github.paolodenti.jsapp.core.util.SappConstants#RES_OK RES_OK} if ok, {@link com.github.paolodenti.jsapp.core.util.SappConstants#RES_KO RES_KO} otherwise)
+     * @param data   response data, without delimiters and checksum
+     */
+    public SappResponse(byte status, byte[] data) {
 
-		this.status = status;
-		this.data = data;
-	}
+        this.status = status;
+        this.data = data;
+    }
 
-	/**
-	 *  @return response status ({@link com.github.paolodenti.jsapp.core.util.SappConstants#RES_OK RES_OK} if ok, {@link com.github.paolodenti.jsapp.core.util.SappConstants#RES_KO RES_KO} otherwise)
-	 */
-	public byte getStatus() {
+    /**
+     * @return response status ({@link com.github.paolodenti.jsapp.core.util.SappConstants#RES_OK RES_OK} if ok, {@link com.github.paolodenti.jsapp.core.util.SappConstants#RES_KO RES_KO} otherwise)
+     */
+    public byte getStatus() {
 
-		return status;
-	}
+        return status;
+    }
 
-	/**
-	 *  @return response data, without delimiters and checksum
-	 */
-	public byte[] getData() {
+    /**
+     * @return response data, without delimiters and checksum
+     */
+    public byte[] getData() {
 
-		return data;
-	}
+        return data;
+    }
 
-	/**
-	 *  @return interpreted response data, 2 bytes are interpreted as hex-ascii bytes in order to build a byte
-	 */
-	public byte getDataAsByte() {
+    /**
+     * @return interpreted response data, 2 bytes are interpreted as hex-ascii bytes in order to build a byte
+     */
+    public byte getDataAsByte() {
 
-		byte result = 0;
+        byte result = 0;
 
-		for (int i = 0; i < 2; i++) {
-			if (i < data.length) {
-				result = (byte) (result << 4);
-				result += SappUtils.getByteFromHexAsciiCode(data[i]);
-			} else {
-				break; // premature end of data
-			}
-		}
+        for (int i = 0; i < 2; i++) {
+            if (i < data.length) {
+                result = (byte) (result << 4);
+                result += SappUtils.getByteFromHexAsciiCode(data[i]);
+            } else {
+                break; // premature end of data
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 *  @return interpreted response data, 4 bytes are interpreted as hex-ascii bytes in order to build a word
-	 */
-	public int getDataAsWord() {
+    /**
+     * @return interpreted response data, 4 bytes are interpreted as hex-ascii bytes in order to build a word
+     */
+    public int getDataAsWord() {
 
-		int result = 0;
+        int result = 0;
 
-		for (int i = 0; i < 4; i++) {
-			if (i < data.length) {
-				result = result << 4;
-				result += SappUtils.getByteFromHexAsciiCode(data[i]);
-			} else {
-				break; // premature end of data
-			}
-		}
+        for (int i = 0; i < 4; i++) {
+            if (i < data.length) {
+                result = result << 4;
+                result += SappUtils.getByteFromHexAsciiCode(data[i]);
+            } else {
+                break; // premature end of data
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 *  @return interpreted response data, 2 bytes couples are interpreted as hex-ascii bytes in order to build a byte array
-	 */
-	public byte[] getDataAsByteArray() {
+    /**
+     * @return interpreted response data, 2 bytes couples are interpreted as hex-ascii bytes in order to build a byte array
+     */
+    public byte[] getDataAsByteArray() {
 
-		if (data.length < 2) {
-			return null;
-		}
+        if (data.length < 2) {
+            return null;
+        }
 
-		byte[] resultArr = new byte[data.length / 2];
+        byte[] resultArr = new byte[data.length / 2];
 
-		for (int i = 0; i < data.length; i += 2) {
-			byte result = 0;
-			for (int j = 0; j < 2; j++) {
-				if (i + j < data.length) {
-					result = (byte) (result << 4);
-					result += SappUtils.getByteFromHexAsciiCode(data[i + j]);
-				} else {
-					break; // premature end of data
-				}
-			}
+        for (int i = 0; i < data.length; i += 2) {
+            byte result = 0;
+            for (int j = 0; j < 2; j++) {
+                if (i + j < data.length) {
+                    result = (byte) (result << 4);
+                    result += SappUtils.getByteFromHexAsciiCode(data[i + j]);
+                } else {
+                    break; // premature end of data
+                }
+            }
 
-			resultArr[i / 2] = result;
-		}
+            resultArr[i / 2] = result;
+        }
 
-		return resultArr;
-	}
+        return resultArr;
+    }
 
-	/**
-	 *  @return interpreted response data, 4 bytes tuples are interpreted as hex-ascii bytes in order to build a word array
-	 */
-	public int[] getDataAsWordArray() {
+    /**
+     * @return interpreted response data, 4 bytes tuples are interpreted as hex-ascii bytes in order to build a word array
+     */
+    public int[] getDataAsWordArray() {
 
-		if (data.length < 4) {
-			return null;
-		}
+        if (data.length < 4) {
+            return null;
+        }
 
-		int[] resultArr = new int[data.length / 4];
+        int[] resultArr = new int[data.length / 4];
 
-		for (int i = 0; i < data.length; i += 4) {
-			int result = 0;
-			for (int j = 0; j < 4; j++) {
-				if (i + j < data.length) {
-					result = result << 4;
-					result += SappUtils.getByteFromHexAsciiCode(data[i + j]);
-				} else {
-					break; // premature end of data
-				}
-			}
+        for (int i = 0; i < data.length; i += 4) {
+            int result = 0;
+            for (int j = 0; j < 4; j++) {
+                if (i + j < data.length) {
+                    result = result << 4;
+                    result += SappUtils.getByteFromHexAsciiCode(data[i + j]);
+                } else {
+                    break; // premature end of data
+                }
+            }
 
-			resultArr[i / 4] = result;
-		}
+            resultArr[i / 4] = result;
+        }
 
-		return resultArr;
-	}
+        return resultArr;
+    }
 
-	/**
-	 *  @return interpreted response data, couples of 4 bytes tuples are interpreted as hex-ascii bytes in order to build a map (address as byte, value a word)
-	 */
-	public Map<Byte, Integer> getDataAsByteWordMap() {
+    /**
+     * @return interpreted response data, couples of 4 bytes tuples are interpreted as hex-ascii bytes in order to build a map (address as byte, value a word)
+     */
+    public Map<Byte, Integer> getDataAsByteWordMap() {
 
-		Map<Byte, Integer> resultMap = new HashMap<Byte, Integer>();
+        Map<Byte, Integer> resultMap = new HashMap<>();
 
-		for (int i = 0; i < data.length; i += 6) {
-			byte key = 0;
-			for (int j = 0; j < 2; j++) {
-				if (i + j < data.length) {
-					key = (byte) (key << 4);
-					key += SappUtils.getByteFromHexAsciiCode(data[i + j]);
-				} else {
-					break; // premature end of data
-				}
-			}
+        for (int i = 0; i < data.length; i += 6) {
+            byte key = 0;
+            for (int j = 0; j < 2; j++) {
+                if (i + j < data.length) {
+                    key = (byte) (key << 4);
+                    key += SappUtils.getByteFromHexAsciiCode(data[i + j]);
+                } else {
+                    break; // premature end of data
+                }
+            }
 
-			int value = 0;
-			for (int j = 2; j < 6; j++) {
-				if (i + j < data.length) {
-					value = value << 4;
-					value += SappUtils.getByteFromHexAsciiCode(data[i + j]);
-				} else {
-					break; // premature end of data
-				}
-			}
+            int value = 0;
+            for (int j = 2; j < 6; j++) {
+                if (i + j < data.length) {
+                    value = value << 4;
+                    value += SappUtils.getByteFromHexAsciiCode(data[i + j]);
+                } else {
+                    break; // premature end of data
+                }
+            }
 
-			resultMap.put(new Byte(key), new Integer(value));
-		}
+            resultMap.put(key, value);
+        }
 
-		return resultMap;
-	}
+        return resultMap;
+    }
 
-	/**
-	 *  @return interpreted response data, couples of 4 bytes tuples are interpreted as hex-ascii bytes in order to build a map (address as word, value a word)
-	 */
-	public Map<Integer, Integer> getDataAsWordWordMap() {
+    /**
+     * @return interpreted response data, couples of 4 bytes tuples are interpreted as hex-ascii bytes in order to build a map (address as word, value a word)
+     */
+    public Map<Integer, Integer> getDataAsWordWordMap() {
 
-		Map<Integer, Integer> resultMap = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> resultMap = new HashMap<>();
 
-		for (int i = 0; i < data.length; i += 8) {
-			int key = 0;
-			for (int j = 0; j < 4; j++) {
-				if (i + j < data.length) {
-					key = key << 4;
-					key += SappUtils.getByteFromHexAsciiCode(data[i + j]);
-				} else {
-					break; // premature end of data
-				}
-			}
+        for (int i = 0; i < data.length; i += 8) {
+            int key = 0;
+            for (int j = 0; j < 4; j++) {
+                if (i + j < data.length) {
+                    key = key << 4;
+                    key += SappUtils.getByteFromHexAsciiCode(data[i + j]);
+                } else {
+                    break; // premature end of data
+                }
+            }
 
-			int value = 0;
-			for (int j = 4; j < 8; j++) {
-				if (i + j < data.length) {
-					value = value << 4;
-					value += SappUtils.getByteFromHexAsciiCode(data[i + j]);
-				} else {
-					break; // premature end of data
-				}
-			}
+            int value = 0;
+            for (int j = 4; j < 8; j++) {
+                if (i + j < data.length) {
+                    value = value << 4;
+                    value += SappUtils.getByteFromHexAsciiCode(data[i + j]);
+                } else {
+                    break; // premature end of data
+                }
+            }
 
-			resultMap.put(new Integer(key), new Integer(value));
-		}
+            resultMap.put(key, value);
+        }
 
-		return resultMap;
-	}
+        return resultMap;
+    }
 
-	/**
-	 *  @return a string representation of the object.
-	 */
-	@Override
-	public String toString() {
+    /**
+     * @return a string representation of the object.
+     */
+    @Override
+    public String toString() {
 
-		StringBuffer stringBuffer = new StringBuffer();
-		for (byte b : data) {
-			stringBuffer.append(String.format("%02X ", b));
-		}
-		return String.format("[ status: %d - data: %s]", status, stringBuffer.toString());
-	}
+        StringBuilder stringBuilder = new StringBuilder();
+        for (byte b : data) {
+            stringBuilder.append(String.format("%02X ", b));
+        }
+        return String.format("[ status: %d - data: %s]", status, stringBuilder);
+    }
 }

@@ -29,87 +29,86 @@ import java.util.List;
  */
 public class SappByteBuffer {
 
-	/**
-	 * The actual bytes storage
-	 */
-	private List<Byte> buffer;
+    /**
+     * The actual bytes storage
+     */
+    private final List<Byte> buffer;
 
-	/**
-	 * <p>Creates an empty bytes buffer.</p>
-	 */
-	public SappByteBuffer() {
+    /**
+     * <p>Creates an empty bytes buffer.</p>
+     */
+    public SappByteBuffer() {
 
-		buffer = new ArrayList<Byte>();
-	}
+        buffer = new ArrayList<>();
+    }
 
-	/**
-	 * <p>Empties the bytes buffer.</p>
-	 */
-	public void reset() {
+    /**
+     * <p>Empties the bytes buffer.</p>
+     */
+    public void reset() {
 
-		buffer.clear();
-	}
+        buffer.clear();
+    }
 
-	/**
-	 * <p>Adds a byte to the end.</p>
-	 *
-	 * @param value  byte to be added
-	 */
-	public void addByte(byte value) {
+    /**
+     * <p>Adds a byte to the end.</p>
+     *
+     * @param value byte to be added
+     */
+    public void addByte(byte value) {
 
-		buffer.add(value);
-	}
+        buffer.add(value);
+    }
 
-	/**
-	 * <p>Adds a bytes array to the end.</p>
-	 *
-	 * @param values  bytes to be added
-	 */
-	public void addBytes(byte[] values) {
+    /**
+     * <p>Adds a bytes array to the end.</p>
+     *
+     * @param values bytes to be added
+     */
+    public void addBytes(byte[] values) {
 
-		for (byte value : values) {
-			buffer.add(value);
-		}
-	}
+        for (byte value : values) {
+            buffer.add(value);
+        }
+    }
 
-	/**
-	 * @return the bytes list as byte[]
-	 */
-	public byte[] getArray() {
+    /**
+     * @return the bytes list as byte[]
+     */
+    public byte[] getArray() {
 
-		byte[] byteResponse = new byte[buffer.size()];
-		for (int i = 0; i < buffer.size(); i++) {
-			byteResponse[i] = buffer.get(i).byteValue();
-		}
-		return byteResponse;
-	}
+        byte[] byteResponse = new byte[buffer.size()];
+        for (int i = 0; i < buffer.size(); i++) {
+            byteResponse[i] = buffer.get(i);
+        }
+        return byteResponse;
+    }
 
-	/**
-	 * @param checksum  value to be checked against bytes list checksum
-	 *
-	 * @return {@code true} if {@code checksum} is correct, {@code false} otherwise
-	 */
-	public boolean checkChecksum(int checksum) {
+    /**
+     * @param checksum value to be checked against bytes list checksum
+     * @return {@code true} if {@code checksum} is correct, {@code false} otherwise
+     */
+    public boolean checkChecksum(int checksum) {
 
-		int dataChecksum = 0;
-		for (Byte b : buffer) {
-			dataChecksum += SappUtils.byteToUnsigned(b.byteValue());
-		}
+        int dataChecksum = 0;
+        for (Byte b : buffer) {
+            dataChecksum += SappUtils.byteToUnsigned(b);
+        }
 
-		return dataChecksum == checksum;
-	}
+        return dataChecksum == checksum;
+    }
 
-	/**
-	 *  @return a string representation of the object.
-	 */
-	@Override
-	public String toString() {
+    /**
+     * @return a string representation of the object.
+     */
+    @Override
+    public String toString() {
 
-		StringBuffer stringBuffer = new StringBuffer();
-		for (Byte b : buffer) {
-			stringBuffer.append(String.format("%02X ", b));
-		}
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Byte b : buffer) {
+            stringBuilder.append(String.format("%02X ", b));
+        }
 
-		return stringBuffer.toString();
-	}
+        return stringBuilder.toString();
+    }
 }

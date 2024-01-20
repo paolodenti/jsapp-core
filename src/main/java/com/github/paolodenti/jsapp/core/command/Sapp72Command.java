@@ -31,21 +31,21 @@ import com.github.paolodenti.jsapp.core.util.SappUtils;
  */
 public class Sapp72Command extends SappCommand implements ISappCommandByteArray {
 
-	/**
-	 * <p>0x72 command constructor.</p>
-	 *
-	 * @param nalm  first alarm number
-	 * @param len  number of alarms to read (max 32)
-	 */
-	public Sapp72Command(byte nalm, byte len) {
+    /**
+     * <p>0x72 command constructor.</p>
+     *
+     * @param nalm first alarm number
+     * @param len  number of alarms to read (max 32)
+     */
+    public Sapp72Command(byte nalm, byte len) {
 
-		super();
+        super();
 
-		SappByteBuffer buffer = new SappByteBuffer();
-		buffer.addByte((byte) 0x72);
-		buffer.addBytes(SappUtils.getHexAsciiByte(nalm));
-		buffer.addBytes(SappUtils.getHexAsciiByte(len));
+        SappByteBuffer buffer = new SappByteBuffer();
+        buffer.addByte((byte) 0x72);
+        buffer.addBytes(SappUtils.getHexAsciiByte(nalm));
+        buffer.addBytes(SappUtils.getHexAsciiByte(len));
 
-		this.command = buffer.getArray();
-	}
+        this.command = buffer.getArray();
+    }
 }
